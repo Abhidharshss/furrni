@@ -56,6 +56,8 @@ def reportpdf(request):
     return FileResponse(buf,as_attachment=True,filename='report.pdf')
 
 def index(request):
+    data=None
+    datab=None
     if 'username' in request.session:
         id=request.session['id']
         datau=usr.objects.get(userid=id)
@@ -64,8 +66,14 @@ def index(request):
         else:
             return redirect('userhome')
     else:
-        datab=bn.objects.first()
-        data=pro.objects.all()
+        try:
+            datab=bn.objects.first()
+        except Exception as identifier:
+            pass
+        try:
+            data=pro.objects.all()
+        except Exception as identifier:
+            pass
         return render(request,"index.html",{'data':data,'datab':datab})
         
 def userlogin(request):

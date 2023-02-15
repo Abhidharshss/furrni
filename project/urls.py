@@ -48,7 +48,6 @@ urlpatterns =[
     path('deccartitem',views.deccartitem,name='deccartitem'),
     path('adprivacy',views.adprivacy,name='adprivacy'),
     path('porder',views.porder,name='porder'),
-    path('addtowishlist',views.addtowishlist,name='addtowishlist'),
     path('forgot',views.forgot,name='forgot'),
     path('newpwd',views.newpwd,name='newpwd'),
     path('forg',views.forg,name='forg'),
@@ -59,7 +58,6 @@ urlpatterns =[
     path('shipped',views.shipped,name='shipped'),
     path('cancel',views.cancel,name='cancel'),
     path('paypal',views.paypal,name='paypal'),
-    path('wishlis',views.wishlis,name='wishlis'),
     path('updateprofile',views.updateprofile,name='updateprofile'),
     path('usorcan',views.usorcan,name='usorcan'),
     path('completed',views.completed,name='completed'),
@@ -77,9 +75,6 @@ urlpatterns =[
     path('refund',views.refund,name='refund'),
     path('reportpdf',views.reportpdf,name='reportpdf'),
     path('banner',views.banner,name='banner'),
-    # path('paynow',views.paynow,name='paynow'),
-    # path('prodet',views.prodet,name='prodet'),
 ]
-# handler404 = 'ecommerce.views.error'
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

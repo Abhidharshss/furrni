@@ -53,24 +53,13 @@
 						</span> -->
 				</a>
 				<div class="mx-5">
-                    <div style="float: right;">
+                    <div>
                         <form method="post" enctype="multipart/form-data" action="{% url 'userlogin' %}">
                             {% csrf_token %}
                             <!-- <input type="hidden" value="{{i.productid}}" name="pid"> -->
                             <div class="text-center">
                                 <button type="submit" class="btn btn-sm btn-primary">
                                     <i class="fa-solid fa-lg fa-cart-plus"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <div style="float: left;">
-                        <form method="post" enctype="multipart/form-data" action="{% url 'userlogin' %}">
-                            {% csrf_token %}
-                            <!-- <input type="hidden" value="{{i.productid}}" name="pid"> -->
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-sm btn-primary" style="color: rgb(225, 23, 23);background-color: white;">
-                                    <i class="fa-regular fa-lg fa-heart"></i>
                                 </button>
                             </div>
                         </form>
