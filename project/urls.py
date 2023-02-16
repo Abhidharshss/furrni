@@ -75,6 +75,8 @@ urlpatterns =[
     path('refund',views.refund,name='refund'),
     path('reportpdf',views.reportpdf,name='reportpdf'),
     path('banner',views.banner,name='banner'),
+    path('bannerlist',views.bannerlist,name='bannerlist'),
+    path('delbanner',views.delbanner,name='delbanner'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

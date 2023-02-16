@@ -11,9 +11,9 @@ from django.db.models import Sum
 from django.core.mail import send_mail
 import random
 import os
-# import razorpay
 from django.db.models.functions import ExtractYear, ExtractMonth, ExtractDay
 from django.db.models import Count
+from django.core.paginator import Paginator
 import calendar
 import datetime
 
@@ -154,6 +154,8 @@ def delcartitem(request):
 def inccartitem(request):
     if request.method == 'POST':
         id=request.session['id']
+        total=0
+        quantity=0
         prod_id=request.POST['product_id']
         c=carit.objects.get(cart__user=id,cartitemid=prod_id)
         data=c.product.productid
@@ -164,7 +166,13 @@ def inccartitem(request):
         else:
             c.quantity+=1
             c.save()
-        return JsonResponse({'quantity':c.quantity,'qty':qty})
+        datat=carit.objects.filter(cart__user=id)
+        for d in datat:
+            x=int(d.product.discountprice)
+            y=int(d.quantity)
+            total += (x * y)
+            quantity += d.quantity
+        return JsonResponse({'quantity':c.quantity,'qty':qty,'total':total,'qt':quantity})
     return redirect('cart')
 
 
@@ -179,16 +187,26 @@ def deccartitem(request):
     # return redirect('cart')
     if request.method == 'POST':
         id=request.session['id']
+        total=0
+        quantity=0
         prod_id=request.POST['product_id']
         c=carit.objects.get(cart__user=id,cartitemid=prod_id)
         if c.quantity>=2:
             c.quantity-=1
             c.save()
+        data=carit.objects.filter(cart__user=id)
+        for d in data:
+            x=int(d.product.discountprice)
+            y=int(d.quantity)
+            total += (x * y)
+            quantity += d.quantity
         # else:
         #     print(3)
         #     carit.objects.filter(cartitemid=prod_id).delete()
         data={
-            'quantity':c.quantity
+            'quantity':c.quantity,
+            'total':total,
+            'qt':quantity
         }
         return JsonResponse(data)
     return redirect('cart')
@@ -419,15 +437,18 @@ def userlist(request):
 
 def categorylist(request):
     if 'username' in request.session:
-        if 'search' in request.POST:
-            s=request.POST['search']
-            data = cat.objects.filter(categoryname__icontains=s).all()
-            if len(data) == 0:
-                messages.error(request,'No result found')
-            else:
-                pass
-        else:
-            data=cat.objects.all()
+        # if 'search' in request.POST:
+        #     s=request.POST['search']
+        #     data = cat.objects.filter(categoryname__icontains=s).all()
+        #     if len(data) == 0:
+        #         messages.error(request,'No result found')
+        #     else:
+        #         pass
+        # else:
+        data=cat.objects.all()
+        paginator = Paginator(data,3)
+        page_number = request.GET.get('page')
+        data = paginator.get_page(page_number)
         return render(request,'categorylist.html',{'data':data})
     else:
         return redirect('userlogin')
@@ -489,6 +510,23 @@ def banner(request):
             return render(request,'banner.html')
     else:
         return redirect('index')
+    
+def bannerlist(request):
+    data=bn.objects.all()
+    return render(request,'bannerlist.html',{'data':data})
+
+def delbanner(request):
+    if request.POST:
+        bid=request.POST['bid']
+        ban=bn.objects.get(bannerid=bid)
+        if len(ban.banner) > 0:
+            os.remove(ban.banner.path) 
+        ban.delete()
+        messages.success(request,'Banner deleted successfully')
+        return redirect('bannerlist')
+    else:
+        messages.error(request,'Error occured while delting the banner')
+        return redirect('bannerlist')
 
 def caty(request):
     if request.POST:
