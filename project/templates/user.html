@@ -26,17 +26,30 @@
 
 		.dropdown-menu {
 			margin-top: 0;
-		}select{
+		}
+
+		select {
 			width: 26vh;
 			height: 6vh;
 			font-size: medium;
 			border-radius: 5px;
 			padding: 1vh;
 			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-		}select:hover {
-        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-        transform: translateY(-5px);
-    }
+		}
+
+		select:hover {
+			box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+			transform: translateY(-5px);
+		}
+
+		.footer-section {
+			position: absolute;
+			left: 0;
+			width: 100%;
+			color: #f8f9fa;
+			padding: 15vh 0;
+		}
+
 		/* .zoomable:hover {
 			transform: scale(1.2);
 			transition: all 0.5s ease-in-out;
@@ -66,13 +79,13 @@
 				<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 					<li>
 						<a class="nav-link" href="{% url 'userhome' %}">Home
-							<i class="fa fa-home fa-lg mx-2 text-white"
-								aria-hidden="true">
+							<i class="fa fa-home fa-lg mx-2 text-white" aria-hidden="true">
 							</i>
 						</a>
 					</li>
-					<li><a class="nav-link" href="{% url 'profile' %}">Profile<i class="fa-solid fa-id-card-clip fa-lg mx-2 text-white"></i>
-					</a>
+					<li><a class="nav-link" href="{% url 'profile' %}">Profile<i
+								class="fa-solid fa-id-card-clip fa-lg mx-2 text-white"></i>
+						</a>
 					</li>
 					<li><a class="nav-link mx-3" href="{% url 'cart' %}">Cart<i
 								class="fa fa-shopping-cart fa-lg mx-2 text-white" aria-hidden="true"></i></a></li>
@@ -94,7 +107,7 @@
 		</div>
 
 	</nav>
-	
+
 
 
 	{% block content %}
@@ -102,7 +115,7 @@
 		<div class="container">
 			<div class="row">
 
-				
+
 				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
 					<a class="product-item" href="cart.html">
 						<img src="{% static 'img/product-1.png' %}" class="img-fluid product-thumbnail">
@@ -190,7 +203,7 @@
 			<div class="row g-5 mb-5">
 				<div class="col-lg-4">
 					<div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Furni<span>.</span></a></div>
-					<p class="mb-4">Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus
+					<p class="mb-4 text-dark">Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus
 						malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.
 						Pellentesque habitant</p>
 
@@ -245,7 +258,7 @@
 			<div class="border-top copyright">
 				<div class="row pt-4">
 					<div class="col-lg-6">
-						<p class="mb-2 text-center text-lg-start">Copyright &copy;
+						<p class="mb-2 text-center text-dark text-lg-start">Copyright &copy;
 							<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash;
 							Designed with love by <a href="">Abhidharsh s s</a>
 							<!-- License information: https://untree.co/license/ -->
@@ -284,7 +297,8 @@
 		});
 
 	</script> -->
-	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 	<script>
 		setTimeout(function () {
 			$(".timer").remove();
@@ -312,7 +326,7 @@
 	{% block script %}
 	{% endblock %}
 	<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-	
+
 
 </body>
 

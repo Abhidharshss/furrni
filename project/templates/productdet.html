@@ -2,299 +2,371 @@
 <html lang="en">
 
 <head>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>eCommerce Product Detail</title>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <!------ Include the above in your HEAD tag ---------->
-
-    <style>
-        body {
-            font-family: 'open sans';
-            overflow-x: hidden;
-        }
-
-        img {
-            max-width: 100%;
-        }
-
-        .preview {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-            -webkit-flex-direction: column;
-            -ms-flex-direction: column;
-            flex-direction: column;
-        }
-
-        @media screen and (max-width: 996px) {
-            .preview {
-                margin-bottom: 20px;
-            }
-        }
-
-        .preview-pic {
-            -webkit-box-flex: 1;
-            -webkit-flex-grow: 1;
-            -ms-flex-positive: 1;
-            flex-grow: 1;
-        }
-
-        .preview-thumbnail.nav-tabs {
-            border: none;
-            margin-top: 15px;
-        }
-
-        .preview-thumbnail.nav-tabs li {
-            width: 18%;
-            margin-right: 2.5%;
-        }
-
-        .preview-thumbnail.nav-tabs li img {
-            max-width: 100%;
-            display: block;
-        }
-
-        .preview-thumbnail.nav-tabs li a {
-            padding: 0;
-            margin: 0;
-        }
-
-        .preview-thumbnail.nav-tabs li:last-of-type {
-            margin-right: 0;
-        }
-
-        .tab-content {
-            overflow: hidden;
-        }
-
-        .tab-content img {
-            width: 100%;
-            -webkit-animation-name: opacity;
-            animation-name: opacity;
-            -webkit-animation-duration: .3s;
-            animation-duration: .3s;
-        }
-
-        .card {
-            margin-top: 50px;
-            background: #eee;
-            padding: 3em;
-            line-height: 1.5em;
-        }
-
-        @media screen and (min-width: 997px) {
-            .wrapper {
-                display: -webkit-box;
-                display: -webkit-flex;
-                display: -ms-flexbox;
-                display: flex;
-            }
-        }
-
-        .details {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-            -webkit-flex-direction: column;
-            -ms-flex-direction: column;
-            flex-direction: column;
-        }
-
-        .colors {
-            -webkit-box-flex: 1;
-            -webkit-flex-grow: 1;
-            -ms-flex-positive: 1;
-            flex-grow: 1;
-        }
-
-        .product-title,
-        .price,
-        .sizes,
-        .colors {
-            text-transform: UPPERCASE;
-            font-weight: bold;
-        }
-
-        .checked,
-        .price span {
-            color: #ff9f1a;
-        }
-
-        .product-title,
-        .rating,
-        .product-description,
-        .price,
-        .vote,
-        .sizes {
-            margin-bottom: 15px;
-        }
-
-        .product-title {
-            margin-top: 0;
-        }
-
-        .size {
-            margin-right: 10px;
-        }
-
-        .size:first-of-type {
-            margin-left: 40px;
-        }
-
-        .color {
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 10px;
-            height: 2em;
-            width: 2em;
-            border-radius: 2px;
-        }
-
-        .color:first-of-type {
-            margin-left: 20px;
-        }
-
-        .add-to-cart,
-        .like {
-            background: #ff9f1a;
-            padding: 1.2em 1.5em;
-            border: none;
-            text-transform: UPPERCASE;
-            font-weight: bold;
-            color: #fff;
-            -webkit-transition: background .3s ease;
-            transition: background .3s ease;
-        }
-
-        .add-to-cart:hover,
-        .like:hover {
-            background: #b36800;
-            color: #fff;
-        }
-
-        .not-available {
-            text-align: center;
-            line-height: 2em;
-        }
-
-        .not-available:before {
-            font-family: fontawesome;
-            content: "\f00d";
-            color: #fff;
-        }
-
-        .orange {
-            background: #ff9f1a;
-        }
-
-        .green {
-            background: #85ad00;
-        }
-
-        .blue {
-            background: #0076ad;
-        }
-
-        .tooltip-inner {
-            padding: 1.3em;
-        }
-
-        @-webkit-keyframes opacity {
-            0% {
-                opacity: 0;
-                -webkit-transform: scale(3);
-                transform: scale(3);
-            }
-
-            100% {
-                opacity: 1;
-                -webkit-transform: scale(1);
-                transform: scale(1);
-            }
-        }
-
-        @keyframes opacity {
-            0% {
-                opacity: 0;
-                -webkit-transform: scale(3);
-                transform: scale(3);
-            }
-
-            100% {
-                opacity: 1;
-                -webkit-transform: scale(1);
-                transform: scale(1);
-            }
-        }
-    </style>
-
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 
 <body>
-
-    <div class="container">
-        <div class="card">
-            <div class="container-fliud">
-                <div class="wrapper row">
-                    <div class="preview col-md-6">
-
-                        <div class="preview-pic tab-content">
-                            <div class="tab-pane active" id="pic-1">
-                                <img height="100%" src="http://placekitten.com/400/252" />
-                            </div>
-                        </div>
-
+    <div>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar"></nav>
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">Furrni<span>.</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsFurni"
+            aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsFurni">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'userhome' %}">Home <i class="fa fa-home fa-lg mx-2 text-white"
+                        aria-hidden="true"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Profile <i
+                            class="fa-solid fa-id-card-clip fa-lg mx-2 text-white"></i></a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+    <div class="container my-5  d-flex  justify-content-center">
+        <div class="card card-1  w-100">
+            <!-- <a href="{% url 'userhome' %}" class="mx-4 my-3"><i class="fa-solid fa-backward mx-2"></i>BACK </a> -->
+            <div class="card-header" style="background-color: #beb8b8;">
+                <div class="media flex-sm-row flex-column-reverse justify-content-between  ">
+                    <div class="col my-auto">
+                        {% if datap %}
+                        <h4 class="mb-0">Thanks for your Order,<span class="change-color"><span class="mx-2"
+                                    style=" text-transform: uppercase">{{request.session.username}}</span></span> !</h4>
+                        {% else %}
+                        <h4 class="mb-0">No orders yet,<span class="change-color"><span class="mx-2"
+                                    style=" text-transform: uppercase">{{request.session.username}}</span></span> !</h4>
+                        {% endif %}
                     </div>
-                    <div class="details col-md-6">
-                        <h3 class="product-title">men's shoes fashion</h3>
-                        <div class="rating">
-                            <div class="stars">
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                            </div>
-                            <span class="review-no">41 reviews</span>
-                        </div>
-                        <p class="product-description">Suspendisse quos? Tempus cras iure temporibus? Eu laudantium
-                            cubilia sem sem! Repudiandae et! Massa senectus enim minim sociosqu delectus posuere.</p>
-                        <h4 class="price">current price: <span>$180</span></h4>
-                        <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong>
-                        </p>
-                        <!-- <h5 class="sizes">sizes:
-                            <span class="size" data-toggle="tooltip" title="small">s</span>
-                            <span class="size" data-toggle="tooltip" title="medium">m</span>
-                            <span class="size" data-toggle="tooltip" title="large">l</span>
-                            <span class="size" data-toggle="tooltip" title="xtra large">xl</span>
-                        </h5>
-                        <h5 class="colors">colors:
-                            <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
-                            <span class="color green"></span>
-                            <span class="color blue"></span>
-                        </h5> -->
-                        <div class="action mt-3">
-                            <button class="add-to-cart btn btn-default" type="button">add to cart</button>
-                            <button class="like btn btn-default" type="button"><span
-                                    class="fa fa-heart"></span></button>
-                        </div>
+                    <div class="col-auto text-center  my-auto pl-0 pt-sm-4">
+                        <p class="mb-4 pt-0 Glasses h3 text-success">Furrni.</p>
                     </div>
                 </div>
             </div>
+
+            {% if datap %}
+            {% for d in datap %}
+            <div class="card-body" style="background-color: #dbe8f3;">
+                <!-- <div class="row justify-content-between mb-3">
+                    <div class="col-auto">
+                        <h6 class="color-1 mb-0 change-color">Receipt</h6>
+                    </div>
+                    <div class="col-auto  "> <small>Receipt Voucher : 1KAU9-84UIL</small> </div>
+                </div> -->
+                <div class="row mt-4">
+                    <div class="col">
+                        <div class="card card-2">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="sq align-self-center "> <img
+                                            class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0"
+                                            src="../media/{{d.product.image}}" width="135" height="135" /> </div>
+                                    <div class="media-body my-auto text-right">
+                                        <div class="row  my-auto flex-column flex-md-row">
+                                            <div class="col-auto my-auto ">
+                                                <h6 class="mb-0">{{d.order.user.username}}</h6>
+                                            </div>
+                                            <div class="col my-auto  "> <small>{{d.product.productname}}</small></div>
+                                            <!-- <div class="col my-auto  "> <small>Size : L</small></div> -->
+                                            <div class="col my-auto  "> <small>Qty : {{d.quantity}}</small></div>
+                                            <div class="col my-auto ">
+                                                <h6 class="mb-0">&#8377;{{d.order.totalamount}}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-3 ">
+                                <div class="row ">
+                                    <div class="col-md-3 mb-3"> <small> Order status <span><i
+                                                    class=" ml-2 fa fa-refresh" aria-hidden="true"></i></span></small>
+                                    </div>
+                                    {% if d.order.status == 'waiting' %}
+                                    <div class="col mt-auto">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar  rounded" style="width: 18%"
+                                                role="progressbar" aria-valuenow="25" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="media row justify-content-between ">
+                                            <div class="col-auto text-right"><span> <small
+                                                        class="text-right mr-sm-2">Order Placed</small><i
+                                                        class="fa fa-circle active"></i> </span></div>
+                                            <div class="flex-col"> <span> <small class="text-right mr-sm-2">Order
+                                                        shipped</small><i class="fa fa-circle"></i></span></div>
+                                            <div class="col-auto flex-col-auto"><small class="text-right
+                                                    mr-sm-2">Delivered</small><span> <i
+                                                        class="fa fa-circle"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% elif d.order.status == 'shipped' %}
+                                    <div class="col mt-auto">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar  rounded" style="width: 62%"
+                                                role="progressbar" aria-valuenow="25" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="media row justify-content-between ">
+                                            <div class="col-auto flex-col-auto"><small class="text-right
+                                                mr-sm-2">Order placed</small><span> <i class="fa fa-circle"></i></span>
+                                            </div>
+                                            <div class="flex-col"> <span> <small class="text-right mr-sm-2">Order
+                                                        shipped</small><i class="fa fa-circle"></i></span></div>
+                                            <div class="col-auto flex-col-auto"><small class="text-right
+                                                    mr-sm-2">Delivered</small><span> <i
+                                                        class="fa fa-circle"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% elif d.order.status == 'delivered' %}
+                                    <div class="col mt-auto">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar  rounded"
+                                                style="width: 100%;background-color: greenyellow;" role="progressbar"
+                                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="media row justify-content-between ">
+                                            <div class="col-auto text-right"><span> <small
+                                                        class="text-right mr-sm-2"></small> Order Completed<i
+                                                        class="fa fa-circle active" style="color: greenyellow;"></i>
+                                                </span></div>
+                                        </div>
+                                    </div>
+                                    {% elif d.order.status == 'cancelled by admin' or d.order.status == 'cancelled by
+                                    user' %}
+                                    <div class="col mt-auto">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar  rounded"
+                                                style="width: 100%;background-color: red;" role="progressbar"
+                                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="media row justify-content-between ">
+                                            <div class="col-auto text-right"><span> <small
+                                                        class="text-right mr-sm-2"></small> Order Cancelled<i
+                                                        class="fa fa-circle active" style="color: red;"></i> </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        <div class="row justify-content-between">
+                            <div class="col-auto">
+                                <p class="mb-1 text-dark"><b>Order Details</b></p>
+                            </div>
+                            <div class="flex-sm-col text-right col">
+                                <p class="mb-1"><b>Total</b></p>
+                            </div>
+                            <div class="flex-sm-col col-auto">
+                                <p class="mb-1">&#8377;{{d.order.totalamount}}</p>
+                            </div>
+                        </div>
+                        <!-- <div class="row justify-content-between">
+                            <div class="flex-sm-col text-right col">
+                                <p class="mb-1"> <b>Discount</b></p>
+                            </div>
+                            <div class="flex-sm-col col-auto">
+                                <p class="mb-1">&#8377;150</p>
+                            </div>
+                        </div> -->
+                        <div class="row justify-content-between">
+                            <div class="flex-sm-col text-right col">
+                                <p class="mb-1"><b>Payment mode</b></p>
+                            </div>
+                            <div class="flex-sm-col col-auto">
+                                <p class="mb-1">{{d.order.paymentmode}}</p>
+                            </div>
+                            <!-- {% if d.order.paymentmode == 'Paypal' %}
+                            <div class="flex-sm-col col-auto">
+                                <p class="mb-1 h5" style="color: greenyellow;">Payment Completed</p>
+                            </div>
+                            {% else %}
+                            <div class="flex-sm-col col-auto">
+                                <p class="mb-1 h4" style="color: rgb(78, 78, 233);">Pay at the time of delivery</p>
+                            </div>
+                            {% endif %} -->
+
+                        </div>
+                        <div class="row justify-content-between mt-2">
+                            {% if d.order.paymentmode == 'Paypal' and d.order.status != 'cancelled by user' and d.order.status != 'cancelled by admin' %}
+                            <div class="flex-sm-col text-right col">
+                                <p class="mb-1"><b></b></p>
+                            </div>
+                            <!-- <div class="flex-sm-col col-auto">
+                                <p class="mb-1 h5 fw-bolder" style="color: #789b43;font-weight: 900;">Payment Completed
+                                </p>
+                            </div> -->
+                            {% else %}
+                            <div class="flex-sm-col text-right col">
+                                <p class="mb-1"><b></b></p>
+                            </div>
+                            <div class="flex-sm-col col-auto">
+                                {% if d.order.status == 'cancelled by admin' or d.order.status == 'cancelled by user' %}
+                                <p class="mb-1 h5 fw-bolder" style="color: #f30808;font-weight: 900;">Order {{d.order.status}}</p>
+                                {% elif d.order.status == 'completed' %}
+                                <p class="mb-1 h5 fw-bolder" style="color: #55d078;font-weight: 900;">Order {{d.order.status}}</p>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                            {% if d.order.paymentmode == 'COD' and d.order.status != 'cancelled by user' and d.order.status != 'cancelled by admin' and d.order.status != 'completed' %}
+                            <div class="flex-sm-col text-right col">
+                                <p class="mb-1"><b></b></p>
+                            </div>
+                            <div class="flex-sm-col col-auto">
+                                <p class="mb-1 h4" style="color: rgb(78, 78, 233);">Pay at the time of delivery</p>
+                            </div>
+                            {% elif d.order.status == 'completed' %}
+                            <div class="flex-sm-col text-right col">
+                                <p class="mb-1"><b></b></p>
+                            </div>
+                            <!-- <div class="flex-sm-col col-auto">
+                                <p class="mb-1 h4" style="color: rgb(78, 78, 233);">Order {{d.order.status}}</p>
+                            </div> -->
+                            {% elif d.order.status == 'return requested' %}
+                            <div class="flex-sm-col text-right col">
+                                <p class="mb-1"><b></b></p>
+                            </div>
+                            <div class="flex-sm-col col-auto">
+                                <p class="mb-1 h4" style="color: rgb(78, 78, 233);">Return requested</p>
+                            </div>
+                            {% elif d.order.status == 'refunded' %}
+                            <div class="flex-sm-col text-right col">
+                                <p class="mb-1"><b></b></p>
+                            </div>
+                            <div class="flex-sm-col col-auto">
+                                <p class="mb-1 h4" style="color: rgb(189, 24, 24);">Order returned and refunded</p>
+                            </div>
+                            {% else %}
+                            <div class="flex-sm-col text-right col">
+                                <p class="mb-1"><b></b></p>
+                            </div>
+                            <!-- <div class="flex-sm-col col-auto">
+                                <p class="mb-1 h4" style="color: rgb(78, 78, 233);">Order {{d.order.status}}</p>
+                            </div> -->
+                            {% endif %}
+
+                        </div>
+                        <!-- <div class="row justify-content-between">
+                            <div class="flex-sm-col text-right col">
+                                <p class="mb-1"><b>Delivery Charges</b></p>
+                            </div>
+                            <div class="flex-sm-col col-auto">
+                                <p class="mb-1">Free</p>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="row invoice ">
+                    <div class="col">
+                        <p class="mb-1"> Invoice Number : {{d.order.orderid}}</p>
+                        <p class="mb-1">Invoice Date : {{d.order.orderdate}}</p>
+                        <!-- <p class="mb-1">Recepits Voucher:18KU-62IIK</p> -->
+                    </div>
+                </div>
+                {% if d.order.status == 'waiting' and datac == 1 %}
+                <div class="row mt-4">
+                    <div class="col">
+                        <form action="">
+                            <input type="hidden" name="did" id="" value="{{d.order.orderid}}">
+                            <div class="row justify-content-between">
+                                <div class="col-auto">
+                                    <p class="mb-1 text-dark"><b></b></p>
+                                </div>
+                                <div class="flex-sm-col col-auto">
+                                    <button type="button" class="btn btn-danger btn-rounded">Cancel order</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% elif d.order.status == 'completed' and datac == 1 %}
+                <div class="row mt-4">
+                    <div class="col">
+                        <div class="row justify-content-between">
+                            <div class="col-auto">
+                                <p class="mb-1 text-dark"><b></b></p>
+                            </div>
+                            <div class="flex-sm-col col-auto">
+                                <button type="button" class="btn btn-info btn-rounded">Return</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="card-body text-center">
+                <div class="row d-flex justify-content-center">
+                    <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_sjrrfsoj.json"
+                        background="transparent" speed="1" style="width: 300px; height: 300px;"
+                        autoplay></lottie-player>
+                </div>
+                <a type=button href="{% url 'userhome' %}" class="btn btn-dark text-white">Shop now</a>
+            </div>
+            {% endif %}
+
+            <!-- <div class="card-footer">
+                <div class="jumbotron-fluid">
+                    <div class="row justify-content-between ">
+                        <div class="col-sm-auto col-auto my-auto"><img class="img-fluid my-auto align-self-center "
+                                src="https://i.imgur.com/7q7gIzR.png" width="115" height="115"></div>
+                        <div class="col-auto my-auto ">
+                            <h2 class="mb-0 font-weight-bold">TOTAL PAID</h2>
+                        </div>
+                        <div class="col-auto my-auto ml-auto">
+                            <h1 class="display-3 ">&#8377; 5,528</h1>
+                        </div>
+                    </div>
+                    <div class="row mb-3 mt-3 mt-md-0">
+                        <div class="col-auto border-line"> <small class="text-white">PAN:AA02hDW7E</small></div>
+                        <div class="col-auto border-line"> <small class="text-white">CIN:UMMC20PTC </small></div>
+                        <div class="col-auto "><small class="text-white">GSTN:268FD07EXX </small> </div>
+                    </div>
+                </div>
+            </div> -->
+            {% if datac != 1 and data.status == 'waiting' %}
+            <hr class="mx-3" style="background-color: #fff;border-top: 2px dashed #8c8b8b;">
+            <form class="p-3" method="post" action="{% url 'usorcan' %}">
+                {% csrf_token %}
+                <input type="hidden" name="oid" id="" value="{{data.orderid}}">
+                <div>
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel order</button>
+                </div>
+            </form>
+            {% elif datac != 1 and data.status == 'completed'  %}
+            <hr class="mx-3" style="background-color: #fff;border-top: 2px dashed #8c8b8b;">
+            <form class="p-3" method="post" action="{% url 'ordreturn' %}">
+                {% csrf_token %}
+                <input type="hidden" name="oid" id="" value="{{data.orderid}}">
+                <div>
+                    <button type="submit" class="btn btn-secondary">Return order</button>
+                </div>
+            </form>
+            {% endif %}
         </div>
     </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
 
 </html>

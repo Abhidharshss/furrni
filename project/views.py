@@ -333,14 +333,57 @@ def address(request):
         postalcode=request.POST['postalcode']
         mail=request.POST['mail']
         phone=request.POST['phone']
-        postalcode=request.POST['postalcode']
-        postalcode=request.POST['postalcode']
         add.objects.create(user=data,firstname=firstname,lastname=lastname,street=street,state=state,postalcode=postalcode,mail=mail,phone=phone)
         messages.success(request,'New address added successfully')
         return redirect('checkout')
     else:
         messages.error(request,'Operation failed')
         return redirect('checkout')
+
+def deladdress(request):
+    if request.POST:
+        id = request.POST['aid']
+        add.objects.filter(addressid=id).delete()
+        messages.success(request,'Address deleted successfully')
+        return redirect('profile')
+    else:
+        messages.error(request,'Error occured')
+        return redirect('profile')
+    
+def editaddress(request):
+    if request.POST:
+        id=request.POST['aid']
+        firstname=request.POST['firstname']
+        lastname=request.POST['lastname']
+        street=request.POST['street']
+        state=request.POST['state']
+        postalcode=request.POST['postalcode']
+        mail=request.POST['mail']
+        phone=request.POST['phone']
+        add.objects.filter(addressid=id).update(firstname=firstname,lastname=lastname,street=street,state=state,postalcode=postalcode,mail=mail,phone=phone)
+        messages.success(request,'Address updated successfully')
+        return redirect('profile')
+    else:
+        messages.error(request,'Error editing the address')
+        return redirect('profile')
+    
+def newaddress(request):
+    if request.POST:
+        id=request.POST['uid']
+        data=usr.objects.get(userid=id)
+        firstname=request.POST['firstname']
+        lastname=request.POST['lastname']
+        street=request.POST['street']
+        state=request.POST['state']
+        postalcode=request.POST['postalcode']
+        mail=request.POST['mail']
+        phone=request.POST['phone']
+        add.objects.create(user=data,firstname=firstname,lastname=lastname,street=street,state=state,postalcode=postalcode,mail=mail,phone=phone)
+        messages.success(request,'New address added successfully')
+        return redirect('profile')
+    else:
+        messages.error(request,'Error while adding new address')
+        return redirect('profile')
 
 def thankyou(request):
     return render(request,'thankyou.html')
@@ -437,19 +480,19 @@ def userlist(request):
 
 def categorylist(request):
     if 'username' in request.session:
-        # if 'search' in request.POST:
-        #     s=request.POST['search']
-        #     data = cat.objects.filter(categoryname__icontains=s).all()
-        #     if len(data) == 0:
-        #         messages.error(request,'No result found')
-        #     else:
-        #         pass
-        # else:
-        data=cat.objects.all()
-        paginator = Paginator(data,3)
-        page_number = request.GET.get('page')
-        data = paginator.get_page(page_number)
-        return render(request,'categorylist.html',{'data':data})
+        if 'search' in request.POST:
+            s=request.POST['search']
+            data = cat.objects.filter(categoryname__icontains=s).all()
+            if len(data) == 0:
+                pass
+            else:
+                return render(request,'categorylist.html',{'data':data})
+        else:
+            data=cat.objects.all()
+            paginator = Paginator(data,6)
+            page_number = request.GET.get('page')
+            data = paginator.get_page(page_number)
+            return render(request,'categorylist.html',{'data':data})
     else:
         return redirect('userlogin')
 

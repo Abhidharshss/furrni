@@ -1,310 +1,195 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'user.html' %}
+{% load static %}
+<style>
+    .text-bold {
+        font-weight: 800;
+    }
 
-<head>
+    text-color {
+        color: #0093c4;
+    }
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    /* Main image - left */
+    .main-img img {
+        width: 100%;
+    }
 
-    <title>eCommerce Product Detail</title>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <!------ Include the above in your HEAD tag ---------->
+    /* Preview images */
+    .previews img {
+        width: 100%;
+        height: 140px;
+    }
 
-    <style>
-        body {
-            font-family: 'open sans';
-            overflow-x: hidden;
-        }
+    .main-description .category {
+        text-transform: uppercase;
+        color: #0093c4;
+    }
 
-        img {
-            max-width: 100%;
-        }
+    .main-description .product-title {
+        font-size: 2.5rem;
+    }
 
-        .preview {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-            -webkit-flex-direction: column;
-            -ms-flex-direction: column;
-            flex-direction: column;
-        }
+    .old-price-discount {
+        font-weight: 600;
+    }
 
-        @media screen and (max-width: 996px) {
-            .preview {
-                margin-bottom: 20px;
-            }
-        }
+    .new-price {
+        font-size: 2rem;
+    }
 
-        .preview-pic {
-            -webkit-box-flex: 1;
-            -webkit-flex-grow: 1;
-            -ms-flex-positive: 1;
-            flex-grow: 1;
-        }
+    .details-title {
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 1.2rem;
+        color: #757575;
+    }
 
-        .preview-thumbnail.nav-tabs {
-            border: none;
-            margin-top: 15px;
-        }
+    .buttons .block {
+        margin-right: 5px;
+    }
 
-        .preview-thumbnail.nav-tabs li {
-            width: 18%;
-            margin-right: 2.5%;
-        }
+    .quantity input {
+        border-radius: 0;
+        height: 40px;
 
-        .preview-thumbnail.nav-tabs li img {
-            max-width: 100%;
-            display: block;
-        }
+    }
 
-        .preview-thumbnail.nav-tabs li a {
-            padding: 0;
-            margin: 0;
-        }
 
-        .preview-thumbnail.nav-tabs li:last-of-type {
-            margin-right: 0;
-        }
+    .custom-btn {
+        text-transform: capitalize;
+        background-color: #0093c4;
+        color: white;
+        width: 150px;
+        height: 40px;
+        border-radius: 0;
+    }
 
-        .tab-content {
-            overflow: hidden;
-        }
+    .custom-btn:hover {
+        background-color: #0093c4 !important;
+        font-size: 18px;
+        color: white !important;
+    }
 
-        .tab-content img {
+    .similar-product img {
+        height: 400px;
+    }
+
+    .similar-product {
+        text-align: left;
+    }
+
+    .similar-product .title {
+        margin: 17px 0px 4px 0px;
+    }
+
+    .similar-product .price {
+        font-weight: bold;
+    }
+
+    .questions .icon i {
+        font-size: 2rem;
+    }
+
+    .questions-icon {
+        font-size: 2rem;
+        color: #0093c4;
+    }
+
+
+    /* Small devices (landscape phones, less than 768px) */
+    @media (max-width: 767.98px) {
+
+        /* Make preview images responsive  */
+        .previews img {
             width: 100%;
-            -webkit-animation-name: opacity;
-            animation-name: opacity;
-            -webkit-animation-duration: .3s;
-            animation-duration: .3s;
+            height: auto;
         }
 
-        .card {
-            margin-top: 50px;
-            background: #eee;
-            padding: 3em;
-            line-height: 1.5em;
-        }
+    }
+</style>
 
-        @media screen and (min-width: 997px) {
-            .wrapper {
-                display: -webkit-box;
-                display: -webkit-flex;
-                display: -ms-flexbox;
-                display: flex;
-            }
-        }
-
-        .details {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-            -webkit-flex-direction: column;
-            -ms-flex-direction: column;
-            flex-direction: column;
-        }
-
-        .colors {
-            -webkit-box-flex: 1;
-            -webkit-flex-grow: 1;
-            -ms-flex-positive: 1;
-            flex-grow: 1;
-        }
-
-        .product-title,
-        .price,
-        .sizes,
-        .colors {
-            text-transform: UPPERCASE;
-            font-weight: bold;
-        }
-
-        .checked,
-        .price span {
-            color: #ff9f1a;
-        }
-
-        .product-title,
-        .rating,
-        .product-description,
-        .price,
-        .vote,
-        .sizes {
-            margin-bottom: 15px;
-        }
-
-        .product-title {
-            margin-top: 0;
-        }
-
-        .size {
-            margin-right: 10px;
-        }
-
-        .size:first-of-type {
-            margin-left: 40px;
-        }
-
-        .color {
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 10px;
-            height: 2em;
-            width: 2em;
-            border-radius: 2px;
-        }
-
-        .color:first-of-type {
-            margin-left: 20px;
-        }
-
-        .add-to-cart,
-        .like {
-            background: #ff9f1a;
-            padding: 1.2em 1.5em;
-            border: none;
-            text-transform: UPPERCASE;
-            font-weight: bold;
-            color: #fff;
-            -webkit-transition: background .3s ease;
-            transition: background .3s ease;
-        }
-
-        .add-to-cart:hover,
-        .like:hover {
-            background: #b36800;
-            color: #fff;
-        }
-
-        .not-available {
-            text-align: center;
-            line-height: 2em;
-        }
-
-        .not-available:before {
-            font-family: fontawesome;
-            content: "\f00d";
-            color: #fff;
-        }
-
-        .orange {
-            background: #ff9f1a;
-        }
-
-        .green {
-            background: #85ad00;
-        }
-
-        .blue {
-            background: #0076ad;
-        }
-
-        .tooltip-inner {
-            padding: 1.3em;
-        }
-
-        @-webkit-keyframes opacity {
-            0% {
-                opacity: 0;
-                -webkit-transform: scale(3);
-                transform: scale(3);
-            }
-
-            100% {
-                opacity: 1;
-                -webkit-transform: scale(1);
-                transform: scale(1);
-            }
-        }
-
-        @keyframes opacity {
-            0% {
-                opacity: 0;
-                -webkit-transform: scale(3);
-                transform: scale(3);
-            }
-
-            100% {
-                opacity: 1;
-                -webkit-transform: scale(1);
-                transform: scale(1);
-            }
-        }
-    </style>
-
-</head>
-
-<body>
-    <div class="container">
-        <div class="card">
-            <div class="container-fliud">
-                <div class="wrapper row">
-                    <div class="preview col-md-6">
-
-                        <div class="preview-pic tab-content">
-                            <div class="tab-pane active" id="pic-1">
-                                <img height="400vh" src="../media/{{d.image}}" />
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="details col-md-6" style="display: flex; align-items: center; justify-content: center;">
-                        <h3 class="product-title">{{d.productname}}</h3>
-                        <div class="rating">
-                            <div class="stars">
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                            </div>
-                            <span class="review-no">41 reviews</span>
-                        </div>
-                        <p class="product-description">{{d.description}}.</p>
-                        <h4 class="price mx-5">current price : <span style="color: black;font-size: medium;">Rs.
-                            </span><span> {{d.discountprice}}</span>
-                            {% if d.offerpercentage %}
-                            <strike style="margin-left: 1rem;">{{d.price}}</strike>
-                            {% endif %}
-                        </h4>
-                        {% if d.offerpercentage %}
-                        <p class="vote"><strong class="h4 text-danger"><b>{{d.offerpercentage}}%</b></strong> Off
-                            <strong></strong>
-                            {% endif %}
-                        </p>
-                        <!-- <h5 class="sizes">sizes:
-                            <span class="size" data-toggle="tooltip" title="small">s</span>
-                            <span class="size" data-toggle="tooltip" title="medium">m</span>
-                            <span class="size" data-toggle="tooltip" title="large">l</span>
-                            <span class="size" data-toggle="tooltip" title="xtra large">xl</span>
-                        </h5>
-                        <h5 class="colors">colors:
-                            <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
-                            <span class="color green"></span>
-                            <span class="color blue"></span>
-                        </h5> -->
-                        <form class="mt-5" method="post" action="{% url 'addtocart' %}">
-                            {% csrf_token %}
-                            <div class="action">
-                                <input type="hidden" name="pid" id="" value="{{d.productid}}">
-                                <button class="add-to-cart btn btn-default" type="submit">add to cart</button>
-                                <!-- <button class="like btn btn-default" type="button"><span
-                                    class="fa fa-heart"></span></button> -->
-                            </div>
-                        </form>
-                    </div>
-                </div>
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="main-img thumb-image">
+                <img class="img-fluid" src="../media/{{d.image}}" alt="Product" data-imagezoom="true">
             </div>
         </div>
-    </div>
-</body>
+        <div class="col-md-7">
+            <div class="main-description px-2">
+                <div class="category text-bold">
+                    <p class="h2 text-dark">{{d.productname}}</p>
+                </div>
+                <div class="product-title text-bold my-3">
+                    Category : <b class="text-dark">{{d.category.categoryname}}</b>
+                </div>
 
-</html>
+
+                <div class="price-area my-4">
+                    {% if d.offerpercentage %}
+                    <p class="new-price text-bold mb-1 text-dark">
+                    <p class="old-price mb-1 text-dark">Original price : <del><i
+                                class="fa-solid fa-indian-rupee-sign"></i>&nbsp;<b>{{d.price}}</b></del> <span
+                            class="old-price-discount text-danger">&nbsp;<b>({{d.offerpercentage}}%
+                            off)</b></span></p>
+                    {% endif %}
+                    <p class="new-price text-bold mb-1 text-dark">Current price : <i
+                            class="fa-solid fa-indian-rupee-sign"></i>&nbsp;<b>{{d.discountprice}}</b></p>
+                    <p class="text-secondary mb-1">(Does not apply additional tax on checkout)</p>
+
+                </div>
+
+                <div class="product-details my-4">
+                    <p class="details-title text-color mb-1">Product Details</p>
+                    <p class="description text-dark">{{d.description}} </p>
+                </div>
+
+                <form method="post" action="{% url 'addtocart' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="pid" id="" value="{{d.productid}}">
+                    <div class="buttons d-flex my-5">
+                        <div class="block">
+                            <button type="submit" class="shadow btn custom-btn">Add to cart</button>
+                        </div>
+
+                    </div>
+                </form>
+
+
+
+
+            </div>
+
+
+
+            <!-- <div class="row questions bg-light p-3">
+                    <div class="col-md-1 icon">
+                        <i class="fa-brands fa-rocketchat questions-icon"></i>
+                    </div>
+                    <div class="col-md-11 text">
+                        Have a question about our products at E-Store? Feel free to contact our representatives via live
+                        chat or email.
+                    </div>
+                </div> -->
+
+            <div class="delivery my-4">
+                <p class="font-weight-bold mb-0"><span><i class="fa-solid fa-truck"></i></span> <b>Delivery done in
+                        3 days from date of purchase</b> </p>
+                <p class="text-secondary">Order now to get this product delivery</p>
+            </div>
+            <!-- <div class="delivery-options my-4">
+                    <p class="font-weight-bold mb-0"><span><i class="fa-solid fa-filter"></i></span> <b>Delivery
+                            options</b> </p>
+                    <p class="text-secondary">View delivery options here</p>
+                </div> -->
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="{% static 'js/image.js' %}"></script>
+{% endblock %}
