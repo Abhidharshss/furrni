@@ -11,17 +11,6 @@
 {% endblock %}
 
 {% block content %}
-{% if not data %}
-<div class="table-responsive mt-3">
-    <p class="h3 text-center"><b>Seach result not found</b></p>
-</div>
-{% else %}
-<form class="d-none d-md-flex input-group w-auto my-auto" method="post" action="{% url 'productlist' %}">
-    {% csrf_token %}
-    <input autocomplete="off" type="search" class="form-control rounded" name="search"
-        placeholder='Search (ctrl + "/" to focus)' style="min-width:50vh" />
-    <button class="btn" type="submit" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
-</form>
 <div class="table-responsive mt-3">
     <table class="table table-hover table-bordered table-secondary text-center">
         <thead>
@@ -72,5 +61,21 @@
 
     </table>
 </div>
-{% endif %}
+<div class="pagination mx-3">
+    <span class="step-links">
+        {% if data.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ data.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ data.number }} of {{ data.paginator.num_pages }}.
+        </span>
+
+        {% if data.has_next %}
+            <a href="?page={{ data.next_page_number }}">next</a>
+            <a href="?page={{ data.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}

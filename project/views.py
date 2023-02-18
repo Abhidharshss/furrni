@@ -10,6 +10,7 @@ from django.db.models import Q,F
 from django.db.models import Sum
 from django.core.mail import send_mail
 import random
+import string
 import os
 from django.db.models.functions import ExtractYear, ExtractMonth, ExtractDay
 from django.db.models import Count
@@ -219,6 +220,7 @@ def checkout(request):
     offer=None
     datacp=None
     datacp=None
+    coupon=None
     try:
         cart=car.objects.get(user=id)
     except Exception as identifier:
@@ -239,10 +241,6 @@ def checkout(request):
             coupon=request.POST['coupon']
             try:
                 cid=request.POST['cid']
-                if cid is not None:
-                    messages.warning(request,"Coupon applied")
-                else:
-                    pass
             except Exception as identifier:
                 pass
             try:
@@ -270,56 +268,83 @@ def checkout(request):
     except Exception as identifier:
         pass
     dataa=add.objects.filter(user=id).all()
-    return render(request,'checkout.html',{'datad':datad,'datap':datap,'dataa':dataa,'offer':offer,'datacp':datacp})
+    return render(request,'checkout.html',{'datad':datad,'datap':datap,'dataa':dataa,'offer':offer,'datacp':datacp,'coupon':coupon})
 
-def porder(request):
-    id=request.session['id']
-    if request.POST:
-        address=request.POST['address']
-        ordernotes=request.POST['ordernotes']
-        total=request.POST['tid']
-        datac=add.objects.get(addressid=address)
-        user=usr.objects.get(userid=id)
-        ord.objects.create(user=user,address=datac,ordernotes=ordernotes,status='status',totalamount=total,paymentmode='paypal')
-        cart=car.objects.get(user=user)
-        datad=carit.objects.filter(cart=cart.cartid).all()
-        order=ord.objects.filter(user=user).last()
-        for i in datad:
-            product=i.product.productid
-            orderproduct=pro.objects.get(productid=product)
-            datap=int(orderproduct.quantity)-int(i.quantity)
-            pro.objects.filter(productid=product).update(quantity=datap)
-            ordit.objects.create(order=order,product=i.product,quantity=i.quantity)
-        carit.objects.filter(cart=cart.cartid).delete()
-        car.objects.filter(user=user).delete()
-        return redirect('thankyou')
-    else:
-        messages.warning(request,'Error occured')
-        return redirect('checkout')
+def generate_order_number():
+    # Define the possible characters for the order number
+    chars = string.digits + string.ascii_uppercase
+
+    # Generate a random string of length 6 or more
+    length = random.randint(6, 10)
+    order_number = ''.join(random.choice(chars) for _ in range(length))
+
+    return order_number
 
 def paypal(request):
     id=request.session['id']
-    if request.POST:
-        address=request.POST['address']
-        ordernotes=request.POST['ordernotes']
-        total=request.POST['tid']
-        datac=add.objects.get(addressid=address)
-        user=usr.objects.get(userid=id)
-        ord.objects.create(user=user,address=datac,ordernotes=ordernotes,status='waiting',totalamount=total,paymentmode='paypal')
-        cart=car.objects.get(user=user)
-        datad=carit.objects.filter(cart=cart.cartid).all()
-        order=ord.objects.filter(user=user).last()
-        for i in datad:
-            product=i.product.productid
-            orderproduct=pro.objects.get(productid=product)
-            datap=int(orderproduct.quantity)-int(i.quantity)
-            pro.objects.filter(productid=product).update(quantity=datap)
-            ordit.objects.create(order=order,product=i.product,quantity=i.quantity)
-        carit.objects.filter(cart=cart.cartid).delete()
-        car.objects.filter(user=user).delete()
-        return redirect('thankyou')
-    else:
-        messages.warning(request,'Error occured')
+    user=usr.objects.get(userid=id)
+    try:
+        addr=add.objects.filter(user=id).count()
+        if addr == 0:
+            messages.warning(request,'Add address to proceed')
+            return redirect('checkout')
+        else:
+            pass
+        if request.POST:
+            if 'cod' in request.POST:
+                address=request.POST['address']
+                ordernotes=request.POST['ordernotes']
+                total=request.POST['tid']
+                coupon=request.POST['cid']
+                try:
+                    cop=cp.objects.get(couponcode=coupon)
+                except Exception as identifier:
+                    cop=None
+                datac=add.objects.get(addressid=address)
+                user=usr.objects.get(userid=id)
+                order_number = generate_order_number()
+                print(order_number)
+                ord.objects.create(user=user,ordernumber=order_number,address=datac,coupon=cop,ordernotes=ordernotes,status='waiting',totalamount=total,paymentmode='cod')
+                cart=car.objects.get(user=user)
+                datad=carit.objects.filter(cart=cart.cartid).all()
+                order=ord.objects.filter(user=user).last()
+                for i in datad:
+                    product=i.product.productid
+                    orderproduct=pro.objects.get(productid=product)
+                    datap=int(orderproduct.quantity)-int(i.quantity)
+                    pro.objects.filter(productid=product).update(quantity=datap)
+                    ordit.objects.create(order=order,product=i.product,quantity=i.quantity)
+                carit.objects.filter(cart=cart.cartid).delete()
+                car.objects.filter(user=user).delete()
+                return redirect('thankyou')
+            else:
+                address=request.POST['address']
+                ordernotes=request.POST['ordernotes']
+                total=request.POST['tid']
+                coupon=request.POST['cid']
+                cop=cp.objects.get(couponcode=coupon)
+                datac=add.objects.get(addressid=address)
+                user=usr.objects.get(userid=id)
+                order_number = generate_order_number()
+                print(order_number)
+                ord.objects.create(user=user,ordernumber=order_number,address=datac,coupon=cop,ordernotes=ordernotes,status='waiting',totalamount=total,paymentmode='paypal')
+                cart=car.objects.get(user=user)
+                datad=carit.objects.filter(cart=cart.cartid).all()
+                order=ord.objects.filter(user=user).last()
+                for i in datad:
+                    product=i.product.productid
+                    orderproduct=pro.objects.get(productid=product)
+                    datap=int(orderproduct.quantity)-int(i.quantity)
+                    pro.objects.filter(productid=product).update(quantity=datap)
+                    ordit.objects.create(order=order,product=i.product,quantity=i.quantity)
+                carit.objects.filter(cart=cart.cartid).delete()
+                car.objects.filter(user=user).delete()
+                return redirect('thankyou')
+        else:
+            messages.warning(request,'Error occured')
+            return redirect('checkout')
+    except Exception as e:
+        messages.error(request,e)
         return redirect('checkout')
 
 def address(request):
@@ -447,8 +472,10 @@ def adminhome(request):
         datac=ord.objects.filter(status='completed').count()
         dataca=ord.objects.filter(Q(status='cancelled by admin') | Q(status='cancelled by user') | Q(status='refunded')).count()
         datas=ord.objects.filter(status='shipped').count()
+        dataw=ord.objects.filter(status='waiting').count()
         context={
             'datac':datac,
+            'dataw':dataw,
             'dataca':dataca,
             'datas':datas,
             'total_orders':total_orders,
@@ -473,10 +500,14 @@ def userlist(request):
             else:
                 pass
         else:
-            data = usr.objects.exclude(Q(role='admin') | Q(status='False'))
+            data = usr.objects.exclude(Q(role='admin') | Q(status='False')).all()
+            paginator = Paginator(data,6)
+            page_number = request.GET.get('page')
+            data = paginator.get_page(page_number)
         return render(request,'userlist.html',{'data':data})
     else:
         return redirect('userlogin')
+
 
 def categorylist(request):
     if 'username' in request.session:
@@ -498,8 +529,19 @@ def categorylist(request):
 
 def orderlist(request):
     if 'username' in request.session:
-        data=ord.objects.all()
-        return render(request,'orderlist.html',{'data':data})
+        if 'search' in request.POST:
+            s=request.POST['search']
+            data=ord.objects.filter(Q(user__username__icontains=s) | Q(ordernumber=s)).all()
+            if len(data) == 0:
+                pass
+            else:
+                return render(request,'orderlist.html',{'data':data})
+        else:
+            data=ord.objects.all()
+            paginator = Paginator(data,6)
+            page_number = request.GET.get('page')
+            data = paginator.get_page(page_number)
+            return render(request,'orderlist.html',{'data':data})
     else:
         return redirect('userlogin')
 
@@ -532,6 +574,9 @@ def productlist(request):
                 return render(request,'productlist.html',{'data':data,'datac':datac})
         else:
             data=pro.objects.all()
+            paginator = Paginator(data,3)
+            page_number = request.GET.get('page')
+            data = paginator.get_page(page_number)
             return render(request,'productlist.html',{'data':data,'datac':datac})
     else:
         return redirect('userlogin')
@@ -555,8 +600,14 @@ def banner(request):
         return redirect('index')
     
 def bannerlist(request):
-    data=bn.objects.all()
-    return render(request,'bannerlist.html',{'data':data})
+    if 'username' in request.session:
+        data=bn.objects.all()
+        paginator = Paginator(data,6)
+        page_number = request.GET.get('page')
+        data = paginator.get_page(page_number)
+        return render(request,'bannerlist.html',{'data':data})
+    else:
+        return redirect('userlogin')
 
 def delbanner(request):
     if request.POST:
@@ -1092,8 +1143,19 @@ def addoffer(request):
 
 def offerlist(request):
     if 'username' in request.session:
-        data=cp.objects.all()
-        return render(request,'offerlist.html',{'data':data})
+        if 'search' in request.POST:
+            s=request.POST['search']
+            data=cp.objects.filter(Q(couponname__contains=s) | Q(couponcode__contains=s))
+            if len(data) == 0:
+                pass
+            else:
+                return render(request,'offerlist.html',{'data':data})
+        else:
+            data=cp.objects.all()
+            paginator = Paginator(data,6)
+            page_number = request.GET.get('page')
+            data = paginator.get_page(page_number)
+            return render(request,'offerlist.html',{'data':data})
     else:
         return redirect('userlogin')
 

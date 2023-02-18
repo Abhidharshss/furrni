@@ -1,617 +1,382 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'user.html' %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-    <!-- MDB -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css" rel="stylesheet" />
-    <style>
-        body {
-            font-family: "Inter", sans-serif;
-            font-weight: 400;
-            line-height: 28px;
-            color: #6a6a6a;
-            font-size: 14px;
-            background-color: #eff2f1;
-        }
+{% block content %}
+<section class="mb-5">
+    <div class="container py-5">
 
-        .custom-navbar {
-            background: #3b5d50 !important;
-            padding-top: 20px;
-            padding-bottom: 20px;
-        }
-
-        .custom-navbar .navbar-brand {
-            font-size: 32px;
-            font-weight: 600;
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-        }
-
-        .dropdown-active:hover .logout-container {
-            display: block;
-            transform: translateX(170vh) translateY(-10px);
-        }
-
-        @media (min-width: 768px) {
-            .navbar-expand-md .navbar-nav .nav-link {
-                padding-right: 0.5rem;
-                padding-left: 0.5rem;
-            }
-        }
-
-        /* @media (max-width: 500px) {
-            .dropdown-active:hover .logout-container {
-                display: block;
-                transform: translateX(90vh) translateY(-10px);
-            }
-        } */
-        .dropdown-active:hover .logout-container {
-            display: block;
-            transform: translateX(800%) translateY(-20px);
-        }
-
-        .nav-link {
-            display: block;
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
-        }
-
-        li {
-            text-align: -webkit-match-parent;
-        }
-
-        .custom-navbar-cta li {
-            margin-right: 2vh;
-        }
-    </style>
-</head>
-
-<body style="background-color: #eee;">
-    <!-- Start Header/Navigation -->
-    <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
-
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'index' %}">Furrni<span>.</span></a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
-                aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarsFurni">
-                {% block input %}
-                {% endblock %}
-                <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-                </ul>
-
-                <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-                    <li>
-                        <a class="nav-link" href="{% url 'userhome' %}">Home
-                            <i class="fa fa-home fa-lg mx-2 text-white" aria-hidden="true">
-                            </i>
-                        </a>
-                    </li>
-                    <li><a class="nav-link" href="{% url 'profile' %}">Profile<i
-                                class="fa-solid fa-id-card-clip fa-lg mx-2 text-white"></i>
-                        </a>
-                    </li>
-                    <li><a class="nav-link mx-3" href="{% url 'cart' %}">Cart<i
-                                class="fa fa-shopping-cart fa-lg mx-2 text-white" aria-hidden="true"></i></a></li>
-                    <li>
-                        <div class="nav-item dropdown-active"><a class="nav-link dropdown-toggle text-uppercase"
-                                data-toggle="dropdown">{{request.session.username}}<i
-                                    class="fa fa-user fa-lg mx-2 text-white" aria-hidden="true"></i></a>
-                            <div class="dropdown-menu logout-container" style="background-color: aliceblue;">
-                                <a href="{% url 'orderhistory' %}" class="dropdown-item mt-1"><i
-                                        class="fa-solid fa-clock-rotate-left mx-2"></i>Order history</a>
-                                <a href="{% url 'logout' %} " class="dropdown-item mt-1"><i
-                                        class="fa-solid fa-right-from-bracket mx-2"></i>Logout</a>
-                            </div>
-                        </div>
-                    </li>
-
-                </ul>
-            </div>
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show mt-2 timer" role="alert">
+            <i class="mx-2 fas fa-thumbs-up"></i>
+            <strong>{{message}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+        {% endfor %}
 
-    </nav>
-    <section>
-        <div class="container py-5">
-            <!-- <div class="row">
-                <div class="col">
-                    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
-                        <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="{% url 'userhome' %}">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">User Profile</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div> -->
-
-            {% for message in messages %}
-            <div class="alert alert-{{message.tags}} alert-dismissible fade show mt-2 timer" role="alert"><i
-                    class=" mx-2 fa-solid fa-thumbs-up"></i>
-                <strong>{{message}}</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            {% endfor %}
-
-            <div class="row mt-5">
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <!-- <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                                alt="avatar" class="rounded-circle img-fluid" style="width: 150px;"> -->
-                            <i class="fas fa-user-circle fa-4x" style="width: 150px;"></i>
-                            <h5 class="my-3 mb-3">{{d.username}}</h5>
-                            <!-- <p class="text-muted mb-1">Full Stack Developer</p>
-                            <p class="text-muted mb-4">Bay Area, San Francisco, CA</p> -->
-                            <div class="d-flex justify-content-center mb-2">
-                                <!-- <button type="button" class="btn btn-primary">Follow</button> -->
-                                <button type="button" class="btn btn-outline-primary ms-1" data-mdb-toggle="modal"
-                                    data-mdb-target="#edits-{{d.userid}}">Edit profile</button>
-                            </div>
+        <div class="row mt-5">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-user-circle fa-4x" style="width: 150px;"></i>
+                        <h5 class="my-3 mb-3">{{d.username}}</h5>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button type="button" class="btn btn-outline-primary ms-1" data-bs-toggle="modal"
+                                data-bs-target="#edits-{{d.userid}}">Edit profile</button>
                         </div>
                     </div>
-                    <!-- <div class="card mb-4 mb-lg-0">
-                        <div class="card-body p-0">
-                            <ul class="list-group list-group-flush rounded-3">
-                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                    <i class="fas fa-globe fa-lg text-warning"></i>
-                                    <p class="mb-0">https://mdbootstrap.com</p>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                    <i class="fab fa-github fa-lg" style="color: #333333;"></i>
-                                    <p class="mb-0">mdbootstrap</p>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                    <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
-                                    <p class="mb-0">@mdbootstrap</p>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                    <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
-                                    <p class="mb-0">mdbootstrap</p>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                    <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
-                                    <p class="mb-0">mdbootstrap</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div> -->
                 </div>
-                <div class="col-lg-8">
-                    <div class="card p-2">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">username</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">{{d.username}}</p>
-                                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card p-2">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Username</p>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Phone number</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">{{d.phone}}</p>
-                                </div>
+                            <div class="col-sm-9">
+                                <p class="text-dark mb-0"><b>{{d.username}}</b></p>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Email address</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">{{d.email}}</p>
-                                </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Phone number</p>
                             </div>
-                            <hr>
-                            {% if not dataa %}
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Address</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0"><b>No address added yet</b></p>
-                                </div>
-                                <div class="col-sm-3">
-                                    <p class="mb-0"></p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <!-- <p class="text-muted mb-0"><b>Add new address</b></p> -->
-                                    <button type="button" class="btn btn-light" data-mdb-ripple-color="dark"
-                                        data-mdb-toggle="modal" data-mdb-target="#addaddress">Add new address</button>
-                                </div>
+                            <div class="col-sm-9">
+                                <p class="text-dark mb-0"><b>{{d.phone}}</b></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Email address</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-dark mb-0"><b>{{d.email}}</b></p>
+                            </div>
+                        </div>
+                        <hr>
+                        {% if not dataa %}
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Address</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-dark mb-0"><b>No address added yet</b></p>
+                            </div>
+                            <div class="col-sm-3">
+                                <p class="mb-0"></p>
+                            </div>
+                            <div class="col-sm-9">
+                                <button type="button" class="btn btn-light" data-bs-toggle="modal"
+                                    style="background-color: white;color: black;" data-bs-target="#addaddress"
+                                    data-bs-ripple-color="dark">Add new address</button>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="row">
+                            {% for d in dataa %}
+                            {% if forloop.first %}
+                            <div class="col-sm-3">
+                                <p class="mb-0">Address</p>
                             </div>
                             {% else %}
-                            <div class="row">
-                                {% for d in dataa %}
-                                {% if forloop.counter == 1 %}
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Address</p>
-                                </div>
-                                {% else %}
-                                <div class="col-sm-3">
-                                    <p class="mb-0"></p>
-                                </div>
-                                {% endif %}
-                                <div class="col-sm-9 d-flex">
-                                    <div style="flex: auto;">
-                                        <p class="text-muted mb-0">{{d.street}},{{d.postalcode}},{{d.state}}</p>
-                                        <p class="text-muted mb-0">{{d.phone}}</p>
-                                    </div>
-                                    <div>
-                                        <div class="btn-group me-5" role="group"
-                                            aria-label="Button group with nested dropdown">
-                                            <button type="button" class="btn btn-outline-warning"
-                                                data-mdb-toggle="modal"
-                                                data-mdb-target="#edit-{{d.addressid}}">Edit</button>&nbsp;
-                                            <button type="button" class="btn btn-outline-danger" data-mdb-toggle="modal"
-                                                data-mdb-target="#delete-{{d.addressid}}">Delete</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Edit -->
-                                <div class="modal fade" id="edit-{{d.addressid}}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <form action="{% url 'editaddress' %}" method="post">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="aid" value="{{d.addressid}}">
-                                            <div class="modal-content">
-                                                <div class="modal-header bg-light">
-                                                    <p class="modal-title h4" id="exampleModalLabel"><b>Edit address</b>
-                                                    </p>
-                                                    <button type="button" class="btn-close" data-mdb-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="container">
-                                                        <div class="row mb-4">
-                                                            <div class="col">
-                                                                <div class="form-outline-dark">
-                                                                    <label class="form-label" for="form3Example1">First
-                                                                        name</label>
-                                                                    <input type="text" id="form3Example1"
-                                                                        name="firstname" value="{{d.firstname}}"
-                                                                        class="form-control" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="form-outline-dark">
-                                                                    <label class="form-label" for="form3Example2">Last
-                                                                        name</label>
-                                                                    <input type="text" id="form3Example2"
-                                                                        name="lastname" value="{{d.lastname}}"
-                                                                        class="form-control" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mb-4">
-                                                            <div class="col">
-                                                                <div class="form-outline-dark">
-                                                                    <label class="form-label"
-                                                                        for="form3Example1">Street</label>
-                                                                    <input type="text" id="form3Example1" name="street"
-                                                                        value="{{d.street}}" class="form-control" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="form-outline-dark">
-                                                                    <label class="form-label"
-                                                                        for="form3Example2">State</label>
-                                                                    <input type="text" id="form3Example2" name="state"
-                                                                        value="{{d.state}}" class="form-control" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mb-4">
-                                                            <div class="col">
-                                                                <div class="form-outline-dark">
-                                                                    <label class="form-label"
-                                                                        for="form3Example1">Postalcode</label>
-                                                                    <input type="text" id="form3Example1"
-                                                                        name="postalcode" value="{{d.postalcode}}"
-                                                                        class="form-control" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="form-outline-dark">
-                                                                    <label class="form-label"
-                                                                        for="form3Example2">Mail</label>
-                                                                    <input type="text" id="form3Example2" name="mail"
-                                                                        value="{{d.mail}}" class="form-control" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mb-4">
-                                                            <div class="col-6">
-                                                                <div class="form-outline-dark">
-                                                                    <label class="form-label"
-                                                                        for="form3Example1">Phone</label>
-                                                                    <input type="text" id="form3Example1" name="phone"
-                                                                        value="{{d.phone}}" class="form-control" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-mdb-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Update</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <!-- Delete -->
-                                <div class="modal fade" id="delete-{{d.addressid}}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm">
-                                        <form method="post" enctype="multipart/form-data"
-                                            action="{% url 'deladdress' %}">
-                                            {% csrf_token %}
-                                            <input type="hidden" value="{{d.addressid}}" name="aid">
-                                            <div class="modal-content">
-                                                <div class="modal-header bg-danger">
-                                                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">
-                                                        Delete Address</h1>
-                                                    <button type="button" class="btn-close" data-mdb-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <i
-                                                        class="fas fa-exclamation-triangle fa-4x text-danger d-flex justify-content-center"></i><br>
-                                                </div>
-                                                <div class="modal-footer justify-content-center">
-                                                    <button type="button" class="btn btn-outline-warning me-3"
-                                                        data-mdb-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                                <div class="col-sm-3">
-                                    <p class="mb-0"></p>
-                                </div>
-                                <div class="col-sm-9 mt-2">
-                                    <button type="button" class="btn btn-light" data-mdb-ripple-color="dark"
-                                        data-mdb-toggle="modal" data-mdb-target="#addaddress">Add new address</button>
-                                </div>
+                            <div class="col-sm-3">
+                                <p class="mb-0"></p>
                             </div>
                             {% endif %}
-                        </div>
-                    </div>
-                    <!-- add address -->
-                    <div class="modal fade" id="addaddress" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <form action="{% url 'newaddress' %}" method="post">
-                                {% csrf_token %}
-                                <input type="hidden" name="uid" id="" value="{{d.userid}}">
-                                <div class="modal-content">
-                                    <div class="modal-header bg-light">
-                                        <p class="modal-title h4" id="exampleModalLabel"><b>Add address</b>
-                                        </p>
-                                        <button type="button" class="btn-close" data-mdb-dismiss="modal"
-                                            aria-label="Close"></button>
+                            <div class="col-sm-9 d-flex">
+                                <div style="flex: auto;">
+                                    <p class="text-dark mb-0"><b>{{d.street}},{{d.postalcode}},{{d.state}}</b></p>
+                                    <p class="text-dark mb-0"><b>{{d.phone}}</b></p>
+                                </div>
+                                <div>
+                                    <div class="btn-group me-5" role="group"
+                                        aria-label="Button group with nested dropdown">
+                                        <button type="button" class="btn btn-outline-warning"
+                                            style="color: rgb(188, 162, 46);" data-bs-toggle="modal"
+                                            data-bs-target="#edit-{{d.addressid}}">Edit</button>&nbsp;
+                                        <button type="button" class="btn btn-outline-danger" style="color: red;"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#delete-{{d.addressid}}">Delete</button>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="container">
-                                            <div class="row mb-4">
-                                                <div class="col">
-                                                    <div class="form-outline-dark">
-                                                        <label class="form-label" for="form3Example1">First
-                                                            name</label>
-                                                        <input type="text" id="form3Example1" name="firstname"
-                                                            class="form-control" />
+                                </div>
+                            </div>
+                            <!-- Edit -->
+                            <div class="modal fade" id="edit-{{d.addressid}}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <form action="{% url 'editaddress' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="aid" value="{{d.addressid}}">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-light">
+                                                <p class="modal-title h4" id="exampleModalLabel"><b>Edit address</b>
+                                                </p>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="container">
+                                                    <div class="row mb-4">
+                                                        <div class="col">
+                                                            <div class="form-outline-dark">
+                                                                <label class="form-label" for="form3Example1">First
+                                                                    name</label>
+                                                                <input type="text" id="form3Example1" name="firstname"
+                                                                    value="{{d.firstname}}" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-outline-dark">
+                                                                <label class="form-label" for="form3Example2">Last
+                                                                    name</label>
+                                                                <input type="text" id="form3Example2" name="lastname"
+                                                                    value="{{d.lastname}}" class="form-control" />
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-outline-dark">
-                                                        <label class="form-label" for="form3Example2">Last
-                                                            name</label>
-                                                        <input type="text" id="form3Example2" name="lastname"
-                                                            class="form-control" />
+                                                    <div class="row mb-4">
+                                                        <div class="col">
+                                                            <div class="form-outline-dark">
+                                                                <label class="form-label"
+                                                                    for="form3Example1">Street</label>
+                                                                <input type="text" id="form3Example1" name="street"
+                                                                    value="{{d.street}}" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-outline-dark">
+                                                                <label class="form-label"
+                                                                    for="form3Example2">State</label>
+                                                                <input type="text" id="form3Example2" name="state"
+                                                                    value="{{d.state}}" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-4">
+                                                        <div class="col">
+                                                            <div class="form-outline-dark">
+                                                                <label class="form-label"
+                                                                    for="form3Example1">Postalcode</label>
+                                                                <input type="text" id="form3Example1" name="postalcode"
+                                                                    value="{{d.postalcode}}" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-outline-dark">
+                                                                <label class="form-label"
+                                                                    for="form3Example2">Mail</label>
+                                                                <input type="text" id="form3Example2" name="mail"
+                                                                    value="{{d.mail}}" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-4">
+                                                        <div class="col-6">
+                                                            <div class="form-outline-dark">
+                                                                <label class="form-label"
+                                                                    for="form3Example1">Phone</label>
+                                                                <input type="text" id="form3Example1" name="phone"
+                                                                    value="{{d.phone}}" class="form-control" />
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row mb-4">
-                                                <div class="col">
-                                                    <div class="form-outline-dark">
-                                                        <label class="form-label" for="form3Example1">Street</label>
-                                                        <input type="text" id="form3Example1" name="street"
-                                                            class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-outline-dark">
-                                                        <label class="form-label" for="form3Example2">State</label>
-                                                        <input type="text" id="form3Example2" name="state"
-                                                            class="form-control" />
-                                                    </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- Edit -->
+                            <!-- Delete -->
+                            <div class="modal fade" id="delete-{{d.addressid}}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-sm">
+                                    <form method="post" enctype="multipart/form-data" action="{% url 'deladdress' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{d.addressid}}" name="aid">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-danger">
+                                                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">
+                                                    Delete Address</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <i
+                                                    class="fas fa-exclamation-triangle fa-4x text-danger d-flex justify-content-center"></i><br>
+                                            </div>
+                                            <div class="modal-footer justify-content-center">
+                                                <button type="button" class="btn me-3"
+                                                    style="background-color: rgb(167, 137, 39);"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn" style="background-color: #d34646;">Delete</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- Delete -->
+                            {% endfor %}
+                            <div class="col-sm-3">
+                                <p class="mb-0"></p>
+                            </div>
+                            <div class="col-sm-9">
+                                <button type="button" class="btn" data-bs-toggle="modal"
+                                    style="background-color: white;color: black;" data-bs-target="#addaddress"
+                                    data-bs-ripple-color="dark">Add new address</button>
+                            </div>
+
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- add address -->
+                <div class="modal fade" id="addaddress" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <form action="{% url 'newaddress' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="uid" id="" value="{{d.userid}}">
+                            <div class="modal-content">
+                                <div class="modal-header bg-light">
+                                    <p class="modal-title h4" id="exampleModalLabel"><b>Add address</b>
+                                    </p>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container">
+                                        <div class="row mb-4">
+                                            <div class="col">
+                                                <div class="form-outline-dark">
+                                                    <label class="form-label" for="form3Example1">First
+                                                        name</label>
+                                                    <input type="text" id="form3Example1" name="firstname"
+                                                        class="form-control" />
                                                 </div>
                                             </div>
-                                            <div class="row mb-4">
-                                                <div class="col">
-                                                    <div class="form-outline-dark">
-                                                        <label class="form-label" for="form3Example1">Postalcode</label>
-                                                        <input type="text" id="form3Example1" name="postalcode"
-                                                            class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-outline-dark">
-                                                        <label class="form-label" for="form3Example2">Mail</label>
-                                                        <input type="text" id="form3Example2" name="mail"
-                                                            class="form-control" />
-                                                    </div>
+                                            <div class="col">
+                                                <div class="form-outline-dark">
+                                                    <label class="form-label" for="form3Example2">Last
+                                                        name</label>
+                                                    <input type="text" id="form3Example2" name="lastname"
+                                                        class="form-control" />
                                                 </div>
                                             </div>
-                                            <div class="row mb-4">
-                                                <div class="col-6">
-                                                    <div class="form-outline-dark">
-                                                        <label class="form-label" for="form3Example1">Phone</label>
-                                                        <input type="text" id="form3Example1" name="phone"
-                                                            class="form-control" />
-                                                    </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col">
+                                                <div class="form-outline-dark">
+                                                    <label class="form-label" for="form3Example1">Street</label>
+                                                    <input type="text" id="form3Example1" name="street"
+                                                        class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-outline-dark">
+                                                    <label class="form-label" for="form3Example2">State</label>
+                                                    <input type="text" id="form3Example2" name="state"
+                                                        class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col">
+                                                <div class="form-outline-dark">
+                                                    <label class="form-label" for="form3Example1">Postalcode</label>
+                                                    <input type="text" id="form3Example1" name="postalcode"
+                                                        class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-outline-dark">
+                                                    <label class="form-label" for="form3Example2">Mail</label>
+                                                    <input type="text" id="form3Example2" name="mail"
+                                                        class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-6">
+                                                <div class="form-outline-dark">
+                                                    <label class="form-label" for="form3Example1">Phone</label>
+                                                    <input type="text" id="form3Example1" name="phone"
+                                                        class="form-control" />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-mdb-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Update</button>
-                                    </div>
                                 </div>
-                            </form>
-                        </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Add new</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <!-- <div class="row">
-                        <div class="col-md-6">
-                            <div class="card mb-4 mb-md-0">
-                                <div class="card-body">
-                                    <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span> Project
-                                        Status
-                                    </p>
-                                    <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                                    <div class="progress rounded" style="height: 5px;">
-                                        <div class="progress-bar" role="progressbar" style="width: 80%"
-                                            aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
-                                    <div class="progress rounded" style="height: 5px;">
-                                        <div class="progress-bar" role="progressbar" style="width: 72%"
-                                            aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
-                                    <div class="progress rounded" style="height: 5px;">
-                                        <div class="progress-bar" role="progressbar" style="width: 89%"
-                                            aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
-                                    <div class="progress rounded" style="height: 5px;">
-                                        <div class="progress-bar" role="progressbar" style="width: 55%"
-                                            aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
-                                    <div class="progress rounded mb-2" style="height: 5px;">
-                                        <div class="progress-bar" role="progressbar" style="width: 66%"
-                                            aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card mb-4 mb-md-0">
-                                <div class="card-body">
-                                    <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span> Project
-                                        Status
-                                    </p>
-                                    <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                                    <div class="progress rounded" style="height: 5px;">
-                                        <div class="progress-bar" role="progressbar" style="width: 80%"
-                                            aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
-                                    <div class="progress rounded" style="height: 5px;">
-                                        <div class="progress-bar" role="progressbar" style="width: 72%"
-                                            aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
-                                    <div class="progress rounded" style="height: 5px;">
-                                        <div class="progress-bar" role="progressbar" style="width: 89%"
-                                            aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
-                                    <div class="progress rounded" style="height: 5px;">
-                                        <div class="progress-bar" role="progressbar" style="width: 55%"
-                                            aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
-                                    <div class="progress rounded mb-2" style="height: 5px;">
-                                        <div class="progress-bar" role="progressbar" style="width: 66%"
-                                            aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- edit -->
-    <div class="modal right fade" id="edits-{{d.userid}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" data-mdb-backdrop="false" data-mdb-keyboard="true">
-        <div class="modal-dialog modal-side modal-top-right ">
-            <div class="modal-content">
-                <div class="modal-header bg-light">
-                    <p class="modal-title h4" id="exampleModalLabel"><b>Profile Update</b></p>
-                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body mt-1">
-                    <form method="post" action="{% url 'updateprofile' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="uid" value="{{d.userid}}">
-                        <div class="form-outline-dark mb-4">
-                            <label class="form-label" for="form1Example1">Username</label>
-                            <input type="text" id="form1Example1" pattern="[A-Za-z]+" minlength="5"
-                                title="it can be only alphabets and should be 5 atleast" value="{{d.username}}"
-                                class="form-control" name="username" style="height: 5vh;" />
-                        </div>
-                        <div class="form-outline-dark mb-4">
-                            <label class="form-label" for="form1Example1">Phone number</label>
-                            <input type="number" required id="form1Example1" value="{{d.phone}}" class="form-control"
-                                pattern="[0-9]+" minlength="10" maxlength="10"
-                                title="phone number should have 10 digits" name="phone" style="height: 5vh;" />
-                        </div>
-                        <div class="form-outline-dark mb-4">
-                            <label class="form-label" for="form1Example1">Email address</label>
-                            <input readonly type="email" id="form1Example1" value="{{d.email}}" class="form-control"
-                                name="email" style="height: 5vh;" />
-                        </div>
-                        <div class="modal-footer mt-1">
-                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
-                                Close
-                            </button>
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </div>
-                    </form>
-                </div>
+                <!-- add address -->
             </div>
         </div>
     </div>
-    <!-- MDB -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        setTimeout(function () {
-            $(".timer").remove();
-        }, 2000); // 5000ms = 5s
+</section>
+<!-- edit -->
+<div class="modal right fade" id="edits-{{d.userid}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" data-bs-backdrop="false" data-bs-keyboard="true">
+    <div class="modal-dialog modal-side modal-top-right ">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <p class="modal-title h4" id="exampleModalLabel"><b>Profile Update</b></p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body mt-1">
+                <form method="post" action="{% url 'updateprofile' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="uid" value="{{d.userid}}">
+                    <div class="form-outline-dark mb-4">
+                        <label class="form-label" for="form1Example1">Username</label>
+                        <input type="text" id="form1Example1" pattern="[A-Za-z]+" minlength="5"
+                            title="it can be only alphabets and should be 5 atleast" value="{{d.username}}"
+                            class="form-control" name="username" style="height: 5vh;" />
+                    </div>
+                    <div class="form-outline-dark mb-4">
+                        <label class="form-label" for="form1Example1">Phone number</label>
+                        <input type="number" required id="form1Example1" value="{{d.phone}}" class="form-control"
+                            pattern="[0-9]+" minlength="10" maxlength="10" title="phone number should have 10 digits"
+                            name="phone" style="height: 5vh;" />
+                    </div>
+                    <div class="form-outline-dark mb-4">
+                        <label class="form-label" for="form1Example1">Email address</label>
+                        <input readonly type="email" id="form1Example1" value="{{d.email}}" class="form-control"
+                            name="email" style="height: 5vh;" />
+                    </div>
+                    <div class="modal-footer mt-1">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script>
+    setTimeout(function () {
+        $(".timer").remove();
+    }, 2000); // 5000ms = 5s
 
-    </script>
-</body>
-
-</html>
+</script>
+{% endblock %}

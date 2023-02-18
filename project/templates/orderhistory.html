@@ -1,286 +1,140 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'user.html' %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-    <!-- MDB -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css" rel="stylesheet" />
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    <style>
-        body {
-            font-family: "Inter", sans-serif;
-            font-weight: 400;
-            line-height: 28px;
-            color: #6a6a6a;
-            font-size: 14px;
-            background-color: #eff2f1;
-        }
-
-        .custom-navbar {
-            background: #3b5d50 !important;
-            padding-top: 20px;
-            padding-bottom: 20px;
-        }
-
-        .custom-navbar .navbar-brand {
-            font-size: 32px;
-            font-weight: 600;
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-        }
-
-        .dropdown-active:hover .logout-container {
-            display: block;
-            transform: translateX(170vh) translateY(-10px);
-        }
-
-        @media (min-width: 768px) {
-            .navbar-expand-md .navbar-nav .nav-link {
-                padding-right: 0.5rem;
-                padding-left: 0.5rem;
-            }
-        }
-
-        /* @media (max-width: 500px) {
-            .dropdown-active:hover .logout-container {
-                display: block;
-                transform: translateX(90vh) translateY(-10px);
-            }
-        } */
-        .dropdown-active:hover .logout-container {
-            display: block;
-            transform: translateX(800%) translateY(-20px);
-        }
-
-        .nav-link {
-            display: block;
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
-        }
-
-        li {
-            text-align: -webkit-match-parent;
-        }
-
-        .custom-navbar-cta li {
-            margin-right: 2vh;
-        }
-    </style>
-</head>
-
-<body>
-    <!-- Start Header/Navigation -->
-    <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
-
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'index' %}">Furrni<span>.</span></a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
-                aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarsFurni">
-                <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-                </ul>
-
-                <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-                    <li>
-                        <a class="nav-link" href="{% url 'userhome' %}">Home
-                            <i class="fa fa-home fa-lg mx-2 text-white" aria-hidden="true">
-                            </i>
-                        </a>
-                    </li>
-                    <li><a class="nav-link" href="{% url 'profile' %}">Profile<i
-                                class="fa-solid fa-id-card-clip fa-lg mx-2 text-white"></i>
-                        </a>
-                    </li>
-                    <li><a class="nav-link mx-3" href="{% url 'cart' %}">Cart<i
-                                class="fa fa-shopping-cart fa-lg mx-2 text-white" aria-hidden="true"></i></a></li>
-                    <li>
-                        <div class="nav-item dropdown-active"><a class="nav-link dropdown-toggle text-uppercase"
-                                data-toggle="dropdown">{{request.session.username}}<i
-                                    class="fa fa-user fa-lg mx-2 text-white" aria-hidden="true"></i></a>
-                            <div class="dropdown-menu logout-container" style="background-color: aliceblue;">
-                                <a href="{% url 'orderhistory' %}" class="dropdown-item mt-1"><i
-                                        class="fa-solid fa-clock-rotate-left mx-2"></i>Order history</a>
-                                <a href="{% url 'logout' %} " class="dropdown-item mt-1"><i
-                                        class="fa-solid fa-right-from-bracket mx-2"></i>Logout</a>
-                            </div>
-                        </div>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-
-    </nav>
-    <section class="h-100">
-        <div class="container py-5 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-lg-10 col-xl-8">
-                    <div class="card" style="border-radius: 10px;">
-                        <div class="card-header px-5 py-5" style="background-color: #beb8b8;">
-                            {% if datap %}
-                            <p class="mb-0 text-dark h4">Thanks for your Order, <span
-                                style=" text-transform: uppercase">{{request.session.username}}</span>!</p>
-                            {% else %}
-                            <p class="mb-0 text-dark h4">No orders yet, <span
-                                style=" text-transform: uppercase">{{request.session.username}}</span>!</p>
-                            {% endif %}
-                        </div>
+{% block content %}
+<section class="h-100 bg-gradient">
+    <div class="container py-5 h-100 mb-2">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-10 col-xl-8">
+                <div class="card shadow-lg" style="border-radius: 10px;">
+                    <div class="card-header px-4 py-5" style="background-color: #beb8b8;">
                         {% if datap %}
-                        {% for d in datap %}
-                        <div class="card-body p-4" style="background-color: #dbe8f3;">
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <p class="lead fw-normal mb-0" style="color: #a8729a;">Receipt</p>
-                                <p class="small text-muted mb-0">Receipt Voucher : 1KAU9-84UIL</p>
-                            </div>
-                            <div class="card shadow-0 border mb-4">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <img src="../media/{{d.product.image}}"
-                                                class="img-fluid" alt="Phone">
-                                        </div>
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0">{{d.product.productname}}</p>
-                                        </div>
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small">White</p>
-                                        </div>
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small">Capacity: 64GB</p>
-                                        </div>
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small">Qty: {{d.quantity}}</p>
-                                        </div>
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small">{{d.order.totalamount}}</p>
-                                        </div>
-                                    </div>
-                                    <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-md-2">
-                                            <p class="text-muted mb-0 small">Track Order</p>
-                                        </div>
-                                        {% if d.order.status == 'waiting' %}
-                                        <div class="col-md-10">
-                                            <div class="progress" style="height: 6px; border-radius: 16px;">
-                                                <div class="progress-bar" role="progressbar"
-                                                    style="width: 27%; border-radius: 16px; background-color: blue;"
-                                                    aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="d-flex justify-content-around mb-1">
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5">Order placed</p>
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5">Order shipped</p>
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
-                                            </div>
-                                        </div>
-                                        {% elif d.order.status == 'shipped' %}
-                                        <div class="col-md-10">
-                                            <div class="progress" style="height: 6px; border-radius: 16px;">
-                                                <div class="progress-bar" role="progressbar"
-                                                    style="width: 63%; border-radius: 16px; background-color: rgb(221, 164, 41);"
-                                                    aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="d-flex justify-content-around mb-1">
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5">Order placed</p>
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5">Order shipped</p>
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
-                                            </div>
-                                        </div>
-                                        {% elif d.order.status == 'delivered' %}
-                                        <div class="col-md-10">
-                                            <div class="progress" style="height: 6px; border-radius: 16px;">
-                                                <div class="progress-bar" role="progressbar"
-                                                    style="width: 100%; border-radius: 16px; background-color: #0dee11;"
-                                                    aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="d-flex justify-content-around mb-1">
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5">Order placed</p>
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5">Order shipped</p>
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
-                                            </div>
-                                        </div>
-                                        {% elif d.order.status == 'cancelled by admin' or d.order.status == 'cancelled by user' %}
-                                        <div class="col-md-10">
-                                            <div class="progress" style="height: 6px; border-radius: 16px;">
-                                                <div class="progress-bar" role="progressbar"
-                                                    style="width: 100%; border-radius: 16px; background-color: #db0b0b;"
-                                                    aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <div class="d-flex justify-content-around mb-1">
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5"></p>
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5">{{d.order.status}}</p>
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5"></p>
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-between pt-2">
-                                <p class="fw-bold mb-0">Order Details</p>
-                                <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> {{d.order.totalamount}}</p>
-                            </div>
-
-                            <div class="d-flex justify-content-between pt-2">
-                                <p class="text-muted mb-0">Invoice Number : 788152</p>
-                                <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $19.00</p>
-                            </div>
-
-                            <div class="d-flex justify-content-between">
-                                <p class="text-muted mb-0">Invoice Date : 22 Dec,2019</p>
-                                <p class="text-muted mb-0"><span class="fw-bold me-4">GST 18%</span> 123</p>
-                            </div>
-
-                            <div class="d-flex justify-content-between mb-5">
-                                <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p>
-                                <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
-                            </div>
-                        </div>
-                        {% endfor %}
-                        <div class="card-footer border-0 px-4 py-5"
-                            style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
-                            <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">
-                                Total
-                                paid: <span class="h2 mb-0 ms-2">$1040</span></h5>
-                        </div>
+                        <p class="text-dark mb-0 h4">Thanks for your Order, <span class="text-primary"style=" text-transform: uppercase">{{request.session.username}}</span>!</p>
                         {% else %}
-                        <div class="card-body text-center">
-                            <div class="row d-flex justify-content-center">
-                                <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_sjrrfsoj.json"
-                                    background="transparent" speed="1" style="width: 300px; height: 300px;"
-                                    autoplay></lottie-player>
-                            </div>
-                            <a type=button href="{% url 'userhome' %}" class="btn btn-dark text-white">Shop now</a>
-                        </div>
+                        <p class="text-dark mb-0 h4">No orders yet, <span class="text-primary uppercase" style=" text-transform: uppercase">{{request.session.username}}</span>!</p>
                         {% endif %}
                     </div>
+                    {% if datap %}
+                    <div class="card-body p-4" style="background-color: #dbe8f3;">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <p class="lead fw-normal mb-0 text-primary">Receipt</p>
+                            <p class="small text-muted mb-0">Receipt Voucher : 1KAU9-84UIL</p>
+                        </div>
+                        <div class="card shadow-none border mb-4">
+                            <div class="card-body">
+                                {% for d in datap %}
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="../media/{{d.product.image}}"
+                                            class="img-fluid" alt="Phone">
+                                    </div>
+                                    <div class="col-md-3 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0">{{d.product.productname}}</p>
+                                    </div>
+                                    <div class="col-md-3 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0 small">Category: {{d.product.category}}</p>
+                                    </div>
+                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0 small">Quantity: {{d.quantity}}</p>
+                                    </div>
+                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0 small">
+                                            <i class="fa-solid fa-indian-rupee-sign"></i>{% widthratio d.quantity 1 d.product.discountprice %}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-md-2">
+                                        <p class="text-muted mb-0 small">Track Order</p>
+                                    </div>
+                                    {% if data.status == 'waiting' %}
+                                    <div class="col-md-10">
+                                        <div class="progress" style="height: 6px; border-radius: 16px;">
+                                            <div class="progress-bar" role="progressbar" 
+                                                style="width: 27%; border-radius: 16px;background-color: blue;" aria-valuenow="65"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="d-flex justify-content-around mb-1">
+                                            <p class="text-muted mt-1 mb-0 small ms-xl-5">Order placed</p>
+                                            <p class="text-muted mt-1 mb-0 small ms-xl-5">Out for delivery</p>
+                                            <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
+                                        </div>
+                                    </div>
+                                    {% elif data.status == 'shipped' %}
+                                    <div class="col-md-10">
+                                        <div class="progress" style="height: 6px; border-radius: 16px;">
+                                            <div class="progress-bar" role="progressbar"
+                                                style="width: 63%; border-radius: 16px;background-color: rgb(221, 164, 41);" aria-valuenow="65"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="d-flex justify-content-around mb-1">
+                                            <p class="text-muted mt-1 mb-0 small ms-xl-5">Order placed</p>
+                                            <p class="text-muted mt-1 mb-0 small ms-xl-5">Out for delivery</p>
+                                            <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
+                                        </div>
+                                    </div>
+                                    {% elif data.status == 'delivered' %}
+                                    <div class="col-md-10">
+                                        <div class="progress" style="height: 6px; border-radius: 16px;">
+                                            <div class="progress-bar" role="progressbar"
+                                                style="width: 100%; border-radius: 16px;background-color: #0dee11;" aria-valuenow="65" 
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="d-flex justify-content-around mb-1">
+                                            <p class="text-muted mt-1 mb-0 small ms-xl-5">Order placed</p>
+                                            <p class="text-muted mt-1 mb-0 small ms-xl-5">Out for delivery</p>
+                                            <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
+                                        </div>
+                                    </div>
+                                    {% elif data.status == 'cancelled by admin' or data.status == 'cancelled by user' %}
+                                    <div class="col-md-10">
+                                        <div class="progress" style="height: 6px; border-radius: 16px;">
+                                            <div class="progress-bar" role="progressbar"
+                                                style="width: 100%; border-radius: 16px;background-color: #db0b0b;" aria-valuenow="65"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="d-flex justify-content-around mb-1">
+                                            <p class="text-muted mt-1 mb-0 small ms-xl-5"></p>
+                                            <p class="text-dark mt-1 mb-0 small ms-xl-5">{{data.status}}</p>
+                                            <p class="text-muted mt-1 mb-0 small ms-xl-5"></p>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between pt-2">
+                            <p class="fw-bold mb-0">Order Details</p>
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span>
+                                <i class="fa-solid fa-indian-rupee-sign"></i> {{data.totalamount}}
+                            </p>
+                        </div>
+
+                        <div class="d-flex justify-content-between pt-1">
+                            <p class="text-muted mb-0">Invoice Number : 788152</p>
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $19.00</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between pt-1">
+                            <p class="text-muted mb-0">Invoice Date : 22 Dec,2019</p>
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="card-body p-4 text-center">
+                        <div class="row d-flex justify-content-center">
+                            <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_sjrrfsoj.json"
+                                background="transparent" speed="1" style="width: 300px; height: 300px;"
+                                autoplay></lottie-player>
+                        </div>
+                        <a type=button href="{% url 'userhome' %}" class="btn btn-dark text-white">Shop now</a>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
-    </section>
-    <!-- MDB -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
-</body>
+    </div>
+</section>
 
-</html>
+{% endblock %}

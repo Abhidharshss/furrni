@@ -22,7 +22,7 @@
     <p class="h3 text-center"><b>No offer added yet</b></p>
 </div>
 {% else %}
-<form class="d-none d-md-flex input-group w-auto my-auto" method="post" action="{% url 'categorylist' %}">
+<form class="d-none d-md-flex input-group w-auto my-auto" method="post" action="{% url 'offerlist' %}">
     {% csrf_token %}
     <input autocomplete="off" type="search" class="form-control rounded" name="search"
         placeholder='Search (ctrl + "/" to focus)' style="min-width:50vh" />
@@ -149,6 +149,23 @@
 
     </table>
 </div>
+</div>
+<div class="pagination mx-3">
+    <span class="step-links">
+        {% if data.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ data.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ data.number }} of {{ data.paginator.num_pages }}.
+        </span>
+
+        {% if data.has_next %}
+            <a href="?page={{ data.next_page_number }}">next</a>
+            <a href="?page={{ data.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
 </div>
 {% endif %}
 {% endblock %}

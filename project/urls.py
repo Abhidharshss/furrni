@@ -47,7 +47,6 @@ urlpatterns =[
     path('inccartitem',views.inccartitem,name='inccartitem'),
     path('deccartitem',views.deccartitem,name='deccartitem'),
     path('adprivacy',views.adprivacy,name='adprivacy'),
-    path('porder',views.porder,name='porder'),
     path('forgot',views.forgot,name='forgot'),
     path('newpwd',views.newpwd,name='newpwd'),
     path('forg',views.forg,name='forg'),

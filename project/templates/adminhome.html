@@ -165,7 +165,7 @@
 </script>
 <script>
   const ct = document.getElementById('myCharts');
-  const label = ['completed','cancelled','shipped']
+  const label = ['completed','cancelled','shipped','waiting']
 
   new Chart(ct, {
     type: 'doughnut',
@@ -173,11 +173,12 @@
       labels: label,
       datasets: [{
         label: 'Orders By Month',
-        data: [{{ datac }},{{ dataca }},{{ datas }}],
+        data: [{{ datac }},{{ dataca }},{{ datas }},{{ dataw }}],
     backgroundColor: [
       'rgb(153, 255, 51)',
       'rgb(255, 0, 0)',
-      'rgb(51, 102, 255)'
+      'rgb(51, 102, 255)',
+      'rgb(255, 163, 26)'
     ],
     borderWidth: 1
   }]

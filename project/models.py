@@ -67,10 +67,11 @@ class address(models.Model):
 
 class order(models.Model):
     orderid = models.AutoField(primary_key=True)
+    ordernumber = models.CharField(max_length=20,unique=True)
     user = models.ForeignKey(user,on_delete=models.CASCADE,null=False)
     address = models.ForeignKey(address,on_delete=models.CASCADE,null=False)
     orderdate = models.DateTimeField(auto_now_add=True)
-    # couponapplied = models.ForeignKey(coupon,on_delete=models.CASCADE,null=True)
+    coupon = models.ForeignKey(coupon,on_delete=models.CASCADE,null=True)
     ordernotes = models.CharField('ordernotes',max_length=255,null=True)
     status = models.CharField('status',max_length=20,default='waiting')
     totalamount = models.CharField('totalamount',max_length=20)
