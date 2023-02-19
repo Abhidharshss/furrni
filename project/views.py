@@ -886,8 +886,8 @@ def signup(request):
                 return redirect('usersignup')    
             else:
                 pass
-        except Exception as identifier:
-            pass
+        except Exception as e:
+            messages.error(request,e)
         user = usr.objects.create(email=email,phone=phone,username=username,password=password,role='user',status='False')
         user.save()
         secret=pyotp.random_base32()
