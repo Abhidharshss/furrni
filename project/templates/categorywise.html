@@ -33,19 +33,22 @@
 {% endfor %}
 <div class="container mt-4">
     <div class="row mx-1" style="display: flex; justify-content: space-between;">
-        <div class="col-2">
+        <div class="col-md-2">
             <a href="{% url 'userhome' %}" style="text-decoration: none;">
-                <div
-                    style="width:fit-content; height:60px; background: linear-gradient(to right, #ccc, #ddd); text-align:center; padding: 2vh; border-radius: 10px; box-shadow: 1px 1px 5px #999; border: 2px solid #444;">
-                    <p style="font-size: 3vh; color: #444; margin: 0;"><b>All products</b></p>
+                <div class="card border-0 shadow mb-3">
+                    <div class="card-body text-center">
+                        <p class="card-title mb-0 h5"><b>All products</b></p>
+                    </div>
                 </div>
             </a>
         </div>
         {% for d in data %}
-        <div class="col-2">
+        <div class="col-md-2">
             <a href="{% url 'categorywise' %}?datac={{d.categoryid}}" style="text-decoration: none;">
-                <div style="width:fit-content; height:60px; background: linear-gradient(to right, #ccc, #ddd); text-align:center; padding: 2vh; border-radius: 10px; box-shadow: 1px 1px 5px #999;">
-                    <p style="font-size: 3vh; color: #444; margin: 0;"><b>{{d.categoryname}}</b></p>
+                <div class="card border-0 shadow mb-3">
+                    <div class="card-body text-center">
+                        <p class="card-title mb-0 h5"><b>{{d.categoryname}}</b></p>
+                    </div>
                 </div>
             </a>
         </div>

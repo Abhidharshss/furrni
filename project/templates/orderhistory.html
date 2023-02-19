@@ -23,7 +23,7 @@
                         <div class="card shadow-none border mb-4">
                             <div class="card-body">
                                 {% for d in datap %}
-                                <div class="row">
+                                <div class="row mt-1">
                                     <div class="col-md-2">
                                         <img src="../media/{{d.product.image}}"
                                             class="img-fluid" alt="Phone">
@@ -41,9 +41,8 @@
                                         <p class="text-muted mb-0 small">
                                             <i class="fa-solid fa-indian-rupee-sign"></i>{% widthratio d.quantity 1 d.product.discountprice %}</p>
                                     </div>
-                                </div>
+                                </div><hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
                                 {% endfor %}
-                                <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-2">
                                         <p class="text-muted mb-0 small">Track Order</p>
@@ -112,12 +111,16 @@
                         </div>
 
                         <div class="d-flex justify-content-between pt-1">
-                            <p class="text-muted mb-0">Invoice Number : 788152</p>
+                            <p class="text-muted mb-0">Invoice Number : {{data.ordernumber}}</p>
+                            {% if data.coupon %}
                             <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $19.00</p>
+                            {% else %}
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span>Nil</p>
+                            {% endif %}
                         </div>
 
                         <div class="d-flex justify-content-between pt-1">
-                            <p class="text-muted mb-0">Invoice Date : 22 Dec,2019</p>
+                            <p class="text-muted mb-0">Invoice Date : {{data.orderdate}}</p>
                             <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
                         </div>
                     </div>

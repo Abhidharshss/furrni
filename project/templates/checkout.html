@@ -19,8 +19,6 @@
 {% endfor %}
 <div class="untree mt-5">
 	<div class="container">
-		<!-- <form method="post" action="{% url 'porder' %}?total={{datap.total}}">
-			{% csrf_token %} -->
 		<div class="row">
 			<div class="col-md-6 mb-5 mb-md-0">
 				<h2 class="h3 mb-3 text-black">Billing Address</h2>
@@ -84,22 +82,24 @@
 							{% csrf_token %}
 							<input type="hidden" name="cid" value="{{datacp}}">
 							<div class="p-3 p-lg-5 border bg-white">
-
+								{% if cop == None %}
 								<label for="c_code" class="text-black mb-3">Enter your coupon code if you have
 									one</label>
 								<div class="input-group w-75 couponcode-wrap">
-									{% if coupon == None %}
 									<input type="text" class="form-control me-2" value="" name="coupon"
 										aria-label="Coupon Code" required aria-describedby="button-addon2">
-										<div class="input-group-append">
-											<button class="btn btn-black btn-sm" type="submit"
-												id="button-addon2">Apply</button>
-										</div>
-									{% else %}
-									<input type="text" class="form-control me-2" value="{{coupon}}" name="coupon"
-										aria-label="Coupon Code" required aria-describedby="button-addon2" readonly>
-									{% endif %}
+									<div class="input-group-append">
+										<button class="btn btn-black btn-sm" type="submit"
+											id="button-addon2">Apply</button>
+									</div>
 								</div>
+								{% else %}
+								<label for="c_code" class="text-black fw-bold mb-3">Coupon applied</label>
+								<div class="input-group w-75 couponcode-wrap">
+									<input type="text" class="form-control me-2" value="{{cop}}" name="coupon"
+										aria-label="Coupon Code" required aria-describedby="button-addon2" readonly>
+								</div>
+								{% endif %}
 
 							</div>
 						</form>
@@ -182,11 +182,16 @@
 									</tbody>
 								</table>
 
-								<input type="hidden" name="tid" id="" value="{{datap.total}}">
-								{% if coupon %}
-								<input type="hidden" name="cid" id="" value="{{coupon}}">
+								{% if offer %}
+								<input type="text" name="did" value="{{offer}}">
 								{% else %}
-								<input type="hidden" name="cid" value="None">
+								<input type="text" name="did" value="None">
+								{% endif %}
+								<input type="hidden" name="tid" id="" value="{{datap.total}}">
+								{% if cop %}
+								<input type="text" name="cid" id="" value="{{cop}}">
+								{% else %}
+								<input type="text" name="cid" value="None">
 								{% endif %}
 
 								<div class="form-group">

@@ -72,6 +72,7 @@ class order(models.Model):
     address = models.ForeignKey(address,on_delete=models.CASCADE,null=False)
     orderdate = models.DateTimeField(auto_now_add=True)
     coupon = models.ForeignKey(coupon,on_delete=models.CASCADE,null=True)
+    discount = models.CharField('discount',max_length=20,null=False,default=None)
     ordernotes = models.CharField('ordernotes',max_length=255,null=True)
     status = models.CharField('status',max_length=20,default='waiting')
     totalamount = models.CharField('totalamount',max_length=20)

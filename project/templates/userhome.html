@@ -20,111 +20,122 @@
 {% endfor %}
 <div class="container mt-4">
     <div class="row mx-1" style="display: flex; justify-content: space-between;">
-        <div class="col-2">
+        <div class="col-md-2">
             <a href="{% url 'userhome' %}" style="text-decoration: none;">
-                <div
-                    style="width:fit-content; height:8vh; background: linear-gradient(to right, #ccc, #ddd); text-align:center; padding: 2vh; border-radius: 10px; box-shadow: 1px 1px 5px #999; border: 2px solid #444;">
-                    <p style="font-size: 3vh; color: #444; margin: 0;"><b>All products</b></p>
+                <div class="card border-0 shadow mb-3">
+                    <div class="card-body text-center">
+                        <p class="card-title mb-0 h5"><b>All products</b></p>
+                    </div>
                 </div>
             </a>
         </div>
-
         {% for d in datac %}
-
-        <div class="col-2">
+        <div class="col-md-2">
             <a href="{% url 'categorywise' %}?datac={{d.categoryid}}" style="text-decoration: none;">
-                <div
-                    style="width:fit-content; height:8vh; background: linear-gradient(to right, #ccc, #ddd); text-align:center; padding: 2vh; border-radius: 10px; box-shadow: 1px 1px 5px #999;">
-                    <p style="font-size: 3vh; color: #444; margin: 0;"><b>{{d.categoryname}}</b></p>
+                <div class="card border-0 shadow mb-3">
+                    <div class="card-body text-center">
+                        <p class="card-title mb-0 h5"><b>{{d.categoryname}}</b></p>
+                    </div>
                 </div>
             </a>
         </div>
         {% endfor %}
-        <div class="mt-4">
-            <select name="" id="price_range">
-                <option value="">select price range</option>
-                <option value="low_to_high"><a>Low to High</a></option>
-                <option value="high_to_low">High to Low</option>
-            </select>
-        
-    </div>
-</div>
-<div class="product-section" style="padding:2rem 0;">
-    <div class="container">
-        <div class="row" id="content">
+        <div class="mt-4 row g-3">
+            <div class="col-auto mt-4">
+                <p class="fw-bold mb-0">Filter</p>
+            </div>
+            <div class="col-auto">
+                <select class="form-select w-auto" id="price_range">
+                    <option value="">Select filter option</option>
+                    <option value="low_to_high">Price : Low to High</option>
+                    <option value="high_to_low">Price : High to Low</option>
+                    <option value="">Price : < Rs 1000</option>
+                    <option value="">Price : 1000 - 2000</option>
+                    <option value="">Price : High to Low</option>
+                    <option value="">Price : High to Low</option>
+                    <option value="">Price : High to Low</option>
+                    <option value="">Price : High to Low</option>
+                </select>
+            </div>
+        </div>
 
-           
-            {% for i in data %}
-            <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0 mt-1">
-                <form method="post" action="">
-                    <a class="product-item" href="{% url 'productdetail' %}?id={{i.productid}}">
-                        <input type="hidden" name="pid" value="{{i.productid}}">
-                        <img src="../media/{{i.image}}" style="width: 40vh;height: 40vh;"
-                            class="img-fluid product-thumbnail zoom">
-                        <!-- class=zoomable -->
-                        <p class="product-title h4">{{i.productname}}</p>
-                        <strong class="product-price">{{i.discountprice}}&emsp;
-                            {% if i.offerpercentage %}
-                            <span class="text-success">{{i.offerpercentage}}% off</span>
-                            {% endif %}
-                        </strong><br>
-                        <p class="mx-2 h6 mt-1">{{i.provider}}</p>
-                        <!-- <span class="icon-cross">
+    </div>
+    <div class="product-section" style="padding:2rem 0;">
+        <div class="container">
+            <div class="row" id="content">
+
+
+                {% for i in data %}
+                <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0 mt-1">
+                    <form method="post" action="">
+                        <a class="product-item" href="{% url 'productdetail' %}?id={{i.productid}}">
+                            <input type="hidden" name="pid" value="{{i.productid}}">
+                            <img src="../media/{{i.image}}" style="width: 40vh;height: 40vh;"
+                                class="img-fluid product-thumbnail zoom">
+                            <!-- class=zoomable -->
+                            <p class="product-title h4">{{i.productname}}</p>
+                            <strong class="product-price">{{i.discountprice}}&emsp;
+                                {% if i.offerpercentage %}
+                                <span class="text-success">{{i.offerpercentage}}% off</span>
+                                {% endif %}
+                            </strong><br>
+                            <p class="mx-2 h6 mt-1">{{i.provider}}</p>
+                            <!-- <span class="icon-cross">
                                 <img src="{% static 'img/cross.svg' %}" class="img-fluid ">
                             </span> -->
-                    </a>
-                </form>
-                <div class="mx-5">
-                    <div>
-                        <form method="post" enctype="multipart/form-data" action="{% url 'addtocart' %}">
-                            {% csrf_token %}
-                            <input type="hidden" value="{{i.productid}}" name="pid">
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-sm btn-primary">
-                                    <i class="fa-solid fa-lg fa-cart-plus"></i>
-                                </button>
-                            </div>
-                        </form>
+                        </a>
+                    </form>
+                    <div class="mx-5">
+                        <div>
+                            <form method="post" enctype="multipart/form-data" action="{% url 'addtocart' %}">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{i.productid}}" name="pid">
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-sm btn-primary">
+                                        <i class="fa-solid fa-lg fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            {% endfor %}
-            
+                {% endfor %}
 
+
+            </div>
         </div>
     </div>
-</div>
-{% endblock %}
-{% block script %}
-<script>
-    setTimeout(function () {
-        $(".timer").remove();
-    }, 2000); // 2000ms = 2s
+    {% endblock %}
+    {% block script %}
+    <script>
+        setTimeout(function () {
+            $(".timer").remove();
+        }, 2000); // 2000ms = 2s
 
-</script>
-<script>
-    document.getElementById("price_range").addEventListener("change", function() {
-  var selectedOption = this.value;
-  console.log(selectedOption)
-  priceSort();
-  // Send the selected option to the server
-   function priceSort() {
-    window.location.href = `/userhome?price_range=${selectedOption}`
-    // let data = await fetch("/userhome?price_range=" + selectedOption);
-    // data = await data.json();
-   }
+    </script>
+    <script>
+        document.getElementById("price_range").addEventListener("change", function () {
+            var selectedOption = this.value;
+            console.log(selectedOption)
+            priceSort();
+            // Send the selected option to the server
+            function priceSort() {
+                window.location.href = `/userhome?price_range=${selectedOption}`
+                // let data = await fetch("/userhome?price_range=" + selectedOption);
+                // data = await data.json();
+            }
 
-   
-  
-    // .then(response => response.json())
-    // .then(data => {
-    //   // Update the content of the page
-    //   content.innerHTML = "";
-    //   for (var i = 0; i < data.length; i++) {
-    //     content.innerHTML += "<p>" + data[i].productname + " - $" + data[i].price + "</p>";
-    //   }
-    // });
-});
 
-</script>
-{% endblock %}
+
+            // .then(response => response.json())
+            // .then(data => {
+            //   // Update the content of the page
+            //   content.innerHTML = "";
+            //   for (var i = 0; i < data.length; i++) {
+            //     content.innerHTML += "<p>" + data[i].productname + " - $" + data[i].price + "</p>";
+            //   }
+            // });
+        });
+
+    </script>
+    {% endblock %}
