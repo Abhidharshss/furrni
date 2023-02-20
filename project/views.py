@@ -18,44 +18,59 @@ from django.core.paginator import Paginator
 import calendar
 import datetime
 
-#pdf
-from django.http import FileResponse
-import io
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import inch
-from reportlab.lib.pagesizes import letter
+# pdf
+# HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+#reportlabpdf
+# from django.http import FileResponse
+# import io
+# from reportlab.pdfgen import canvas
+# from reportlab.lib.units import inch
+# from reportlab.lib.pagesizes import letter
+# reportlabpdf end
 
 # Create your views here.
-def reportpdf(request):
-    #create bytestream buffer
-    buf=io.BytesIO()
-    #create a canvas
-    c=canvas.Canvas(buf,pagesize=letter,bottomup=0)
-    #create a text object
-    textob=c.beginText()
-    textob.setTextOrigin(inch,inch)
-    textob.setFont("Helvetica",14)
-    c.drawString(5, 0, "Report Heading")
-    data=ord.objects.filter(status='completed').all()
-    datac=ord.objects.filter(status='completed').count()
-    total=0
-    for d in data:
-        total=total+int(d.totalamount)
-    details=[
-        'Total number of Completed orders :' + str(datac),
-        'Sales amount credited :' + str(total),
-    ]
 
-    #loop
-    for i in details:
-        textob.textLine(i)
-    #finish up
-    c.drawText(textob)
-    c.showPage()
-    c.save()
-    buf.seek(0)
-    return FileResponse(buf,as_attachment=True,filename='report.pdf')
+# def reportpdf(request):
+#     #create bytestream buffer
+#     buf=io.BytesIO()
+#     #create a canvas
+#     c=canvas.Canvas(buf,pagesize=letter,bottomup=0)
+#     #create a text object
+#     textob=c.beginText()
+#     textob.setTextOrigin(inch,inch)
+#     textob.setFont("Helvetica",14)
+#     c.drawString(5, 0, "Report Heading")
+#     data=ord.objects.filter(status='completed').all()
+#     datac=ord.objects.filter(status='completed').count()
+#     total=0
+#     for d in data:
+#         total=total+int(d.totalamount)
+#     details=[
+#         'Total number of Completed orders :' + str(datac),
+#         'Sales amount credited :' + str(total),
+#     ]
 
+#     #loop
+#     for i in details:
+#         textob.textLine(i)
+#     #finish up
+#     c.drawText(textob)
+#     c.showPage()
+#     c.save()
+#     buf.seek(0)
+#     return FileResponse(buf,as_attachment=True,filename='report.pdf')
+
+
+def createpdf(request):
+    if request.POST:
+        fromdate=request.POST['fromdate']
+        todate=request.POST['todate']
+        if todate >= fromdate:
+            messages.error(request,"Provide proper date for getting the sales report")
+            return redirect('userhome')
+        
 def index(request):
     data=None
     datab=None

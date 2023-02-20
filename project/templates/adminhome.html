@@ -103,8 +103,28 @@
 
 </div>
 <div class="col-12 mb-2">
-<a class="btn btn-secondary" href="{% url 'reportpdf' %}">Download sales report</a>
+  <form method="post" action="{% url 'createpdf' %}">
+    {% csrf_token %}
+    <div class="row mx-auto">
+      <div class="col-auto mt-1">
+        <b>Sales report</b>
+      </div>
+      <div class="col-auto p-0">
+        <input type="date" class="form-control" placeholder="Input 1" name="fromdate" required >
+      </div>
+      <div class="col-auto">
+        <input type="date" class="form-control" placeholder="Input 2" name="todate" required>
+      </div>
+      <div class="col-auto">
+        <button type="submit" name="pdf" class="btn btn-primary">Download Pdf</button>
+      </div>
+      <div class="col-auto">
+        <button type="submit" name="excel" class="btn btn-secondary">Download Excel</button>
+      </div>
+    </div>
+  </form>
 </div>
+
 <div class="col-12">
   <div class="card">
 
@@ -165,7 +185,7 @@
 </script>
 <script>
   const ct = document.getElementById('myCharts');
-  const label = ['completed','cancelled','shipped','waiting']
+  const label = ['completed', 'cancelled', 'shipped', 'waiting']
 
   new Chart(ct, {
     type: 'doughnut',
@@ -173,13 +193,13 @@
       labels: label,
       datasets: [{
         label: 'Orders By Month',
-        data: [{{ datac }},{{ dataca }},{{ datas }},{{ dataw }}],
+        data: [{{ datac }}, {{ dataca }},{{ datas }}, {{ dataw }}],
     backgroundColor: [
-      'rgb(153, 255, 51)',
-      'rgb(255, 0, 0)',
-      'rgb(51, 102, 255)',
-      'rgb(255, 163, 26)'
-    ],
+    'rgb(153, 255, 51)',
+    'rgb(255, 0, 0)',
+    'rgb(51, 102, 255)',
+    'rgb(255, 163, 26)'
+  ],
     borderWidth: 1
   }]
           },

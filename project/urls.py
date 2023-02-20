@@ -72,13 +72,12 @@ urlpatterns =[
     path('productdet',views.productdet,name='productdet'),
     path('ordreturn',views.ordreturn,name='ordreturn'),
     path('refund',views.refund,name='refund'),
-    path('reportpdf',views.reportpdf,name='reportpdf'),
     path('banner',views.banner,name='banner'),
     path('bannerlist',views.bannerlist,name='bannerlist'),
     path('delbanner',views.delbanner,name='delbanner'),
     path('deladdress',views.deladdress,name='deladdress'),
     path('editaddress',views.editaddress,name='editaddress'),
     path('newaddress',views.newaddress,name='newaddress'),
+    path('createpdf',views.createpdf,name='createpdf'),
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
