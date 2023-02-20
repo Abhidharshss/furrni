@@ -57,6 +57,21 @@
                     </form>
                     {% elif d.status == 'refunded' %}
                     <p class="text-danger fw-bolder">order returned and refunded</p>
+                    {% elif d.status == 'shipped'}
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Action
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item text-danger" data-bs-toggle="modal"
+                                    data-bs-target="#cancel-{{d.orderid}}" href="#"><i
+                                        class="fa-solid fa-ban"></i>Cancel</a></li>
+                            <li><a class="dropdown-item text-success" data-bs-toggle="modal"
+                                    data-bs-target="#complete-{{d.orderid}}" href="#"><i
+                                        class="fa-solid fa-check"></i></i>Completed</a></li>
+                        </ul>
+                    </div>
                     {% else %}
                     <div class="btn-group ">
                         <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown"

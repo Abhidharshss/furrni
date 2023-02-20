@@ -259,7 +259,7 @@ def checkout(request):
                     messages.error(request,"offer expired")
                 else:
                     dat=int(total)*(int(datao)/100)
-                    offer=dat
+                    offer=int(dat)
                     total -=int(dat)
             else:
                 messages.error(request,'Invalid coupon name')
@@ -886,14 +886,14 @@ def signup(request):
                 return redirect('usersignup')    
             else:
                 pass
-        except Exception as e:
-            messages.error(request,e)
+        except Exception as identifier:
+            pass
         user = usr.objects.create(email=email,phone=phone,username=username,password=password,role='user',status='False')
         user.save()
         secret=pyotp.random_base32()
         totp=pyotp.TOTP(secret,interval=300)
         otp=totp.now()
-        send_mail('Furni','Your OTP code is'+str(otp)+' .Please use this OTP to verify your account','abhidharsh6@gmail.com',[user.email],fail_silently=False)
+        send_mail('Furni','Your OTP code is'+str(otp)+' .Please use this OTP to verify your account','furrni.shop@gmail.com',[user.email],fail_silently=False)
         response=redirect(f'otpverification/{user.userid}/{secret}')
         response.set_cookie("can_otp_enter",True,max_age=300)
         messages.success(request,'Otp send to yout E-mail address')

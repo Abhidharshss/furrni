@@ -2,13 +2,20 @@
 {% load static %}
 
 {% block input %}
-<form class="d-none d-md-flex input-group w-auto my-auto" style="margin-left: 5vh;" method="post"
+<!-- <form class="d-none d-md-flex input-group w-auto my-auto" style="margin-left: 5vh;" method="post"
     action="{% url 'userhome' %}">
     {% csrf_token %}
     <input autocomplete="off" type="search" class="form-control rounded" name="search" value="{{s}}"
         placeholder='Search (ctrl + "/" to focus)' style="width:50vh;" />
     <button class="btn" type="submit" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+</form> -->
+<form class="input-group w-auto my-auto mx-5" method="post" action="{% url 'userhome' %}">
+    {% csrf_token %}
+    <input autocomplete="off" type="search" class="form-control rounded" name="search" value="{{s}}"
+        placeholder='Search (ctrl + "/" to focus)' style="max-width:76%;" />
+    <button class="btn" type="submit" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
 </form>
+
 {% endblock %}
 {% block content %}
 {% for message in messages %}
@@ -20,6 +27,7 @@
 {% endfor %}
 <div class="container mt-4">
     <div class="row mx-1" style="display: flex; justify-content: space-between;">
+        {% if data %}
         <div class="col-md-2">
             <a href="{% url 'userhome' %}" style="text-decoration: none;">
                 <div class="card border-0 shadow mb-3">
@@ -29,6 +37,17 @@
                 </div>
             </a>
         </div>
+        {% else %}
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <div class="my-5">
+                        <h2>No products found</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
         {% for d in datac %}
         <div class="col-md-2">
             <a href="{% url 'categorywise' %}?datac={{d.categoryid}}" style="text-decoration: none;">
@@ -40,24 +59,32 @@
             </a>
         </div>
         {% endfor %}
-        <div class="mt-4 row g-3">
-            <div class="col-auto mt-4">
-                <p class="fw-bold mb-0">Filter</p>
-            </div>
+        {% if data %}
+        <div class="mt-2 row g-3">
             <div class="col-auto">
                 <select class="form-select w-auto" id="price_range">
-                    <option value="">Select filter option</option>
+                    <option value="">Select price range</option>
                     <option value="low_to_high">Price : Low to High</option>
                     <option value="high_to_low">Price : High to Low</option>
-                    <option value="">Price : < Rs 1000</option>
-                    <option value="">Price : 1000 - 2000</option>
-                    <option value="">Price : High to Low</option>
-                    <option value="">Price : High to Low</option>
-                    <option value="">Price : High to Low</option>
-                    <option value="">Price : High to Low</option>
                 </select>
             </div>
+            <div class="col-auto">
+                <form class="row g-3">
+                    <div class="col-auto">
+                        <input type="number" class="form-control" id="min_price" placeholder="Enter min price">
+                    </div>
+                    <div class="col-auto">
+                        <label for="max_price" class="form-label">Max Price</label>
+                        <input type="number" class="form-control" id="max_price" placeholder="Enter max price">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">Apply</button>
+                    </div>
+                </form>
+            </div>
         </div>
+
+        {% endif %}
 
     </div>
     <div class="product-section" style="padding:2rem 0;">
@@ -66,7 +93,7 @@
 
 
                 {% for i in data %}
-                <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0 mt-1">
+                <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0 mt-5">
                     <form method="post" action="">
                         <a class="product-item" href="{% url 'productdetail' %}?id={{i.productid}}">
                             <input type="hidden" name="pid" value="{{i.productid}}">

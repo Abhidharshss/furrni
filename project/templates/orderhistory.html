@@ -17,8 +17,8 @@
                     {% if datap %}
                     <div class="card-body p-4" style="background-color: #dbe8f3;">
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <p class="lead fw-normal mb-0 text-primary">Receipt</p>
-                            <p class="small text-muted mb-0">Receipt Voucher : 1KAU9-84UIL</p>
+                            <a class="lead fw-normal mb-0 text-primary">Download Invoice</a>
+                            <p class="small text-muted mb-0">Order number : {{data.ordernumber}}</p>
                         </div>
                         <div class="card shadow-none border mb-4">
                             <div class="card-body">
@@ -112,8 +112,8 @@
 
                         <div class="d-flex justify-content-between pt-1">
                             <p class="text-muted mb-0">Invoice Number : {{data.ordernumber}}</p>
-                            {% if data.coupon %}
-                            <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $19.00</p>
+                            {% if data.discount %}
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> <i class="fa-solid fa-indian-rupee-sign mx-1"></i>{{data.discount}}</p>
                             {% else %}
                             <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span>Nil</p>
                             {% endif %}
@@ -122,6 +122,24 @@
                         <div class="d-flex justify-content-between pt-1">
                             <p class="text-muted mb-0">Invoice Date : {{data.orderdate}}</p>
                             <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
+                        </div>
+
+                        <div class="d-flex justify-content-center pt-1">
+                            {% if data.paymentmode == 'cod' %}
+                            <p class="text-muted mb-0">Payment : Cash on delivery</p>
+                            {% elif data.paymentmode == 'paypal' %}
+                            <p class="text-muted mb-0">Payment : Paypal(completed)</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-flex justify-content-center pt-1">
+                            {% if data.status == 'waiting' %}
+                            <button class="mb-0 border rounded-0 py-1 px-3 text-black font-weight-bold bg-danger">Cancel order</button>
+                            {% elif data.status == 'completed' %}
+                            <button class="mb-0 border rounded-0 py-1 px-3 text-dark font-weight-bold bg-danger">Return order</button>
+                            {% elif data.status == 'cancelled by user' or data.status == 'cancelled by admin' %}
+                            <button class="mb-0 border rounded-0 py-1 px-3 bg-light text-dark font-weight-bold bg-danger" style="text-transform: uppercase;">{{data.status}}</button>
+                            {% endif %}
                         </div>
                     </div>
                     {% else %}
