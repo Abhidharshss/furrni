@@ -440,6 +440,19 @@ def userhome(request):
             elif price_range == "high_to_low":
                 data = pro.objects.order_by('-discountprice')
                 return render(request,'userhome.html',{'data':data,'datac':datac})
+        if 'filter' in request.POST:
+            min=request.POST['min']
+            max=request.POST['max']
+            print(max)
+            if not max:
+                data=pro.objects.filter(discountprice__gte=min)
+                return render(request,'userhome.html',{'data':data,'datac':datac,'min':min})
+            elif not min:
+                data = pro.objects.filter(discountprice__lte=max)
+                return render(request,'userhome.html',{'data':data,'datac':datac,'max':max})
+            else:
+                data = pro.objects.filter(discountprice__gte=min, discountprice__lte=max).all()
+                return render(request,'userhome.html',{'data':data,'datac':datac,"min":min,"max":max})   
         return render(request,'userhome.html',{'data':data,'datac':datac})
     else:
         return redirect('userlogin')
