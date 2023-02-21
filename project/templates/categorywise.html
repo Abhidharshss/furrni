@@ -12,17 +12,6 @@
     }, 2000); // 5000ms = 5s
 
 </script>
-{% block input %}
-<form class="d-none d-md-flex input-group w-auto my-auto" style="margin-left: 5vh;" method="post"
-    action="{% url 'userhome' %}">
-    {% csrf_token %}
-    <input autocomplete="off" type="search" class="form-control rounded" name="search" value="{{s}}"
-        placeholder='Search (ctrl + "/" to focus)' style="width:50vh;" />
-    <button class="btn" type="submit" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
-</form>
-<!-- <input class="mx-4 w-25" style="border-radius: 10px;" type="text"><a href="#"><i class="fa fa-search fa-lg text-dark"
-        aria-hidden="true"></i></a> -->
-{% endblock %}
 {% block content %}
 {% for message in messages %}
 <div class="alert alert-{{message.tags}} alert-dismissible fade show mt-2 mx-5 timer" role="alert"><i

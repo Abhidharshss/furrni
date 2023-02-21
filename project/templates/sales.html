@@ -11,43 +11,38 @@
 </head>
 
 <body>
-    <div class="text-center">
-            <p class="h4">Sales report</p>
+    <div class="row">
+        <div class="col-auto">From : {{fromdate}}</div>
+        <div class="col-auto mx-2">To : {{todate}}</div>
     </div>
-    <div class="p-3 mt-5">
-        <div class="row">
-            <div class="col-auto">From : {{fromdate}}</div>
-            <div class="col-auto mx-2">To : {{todate}}</div>
-        </div>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th >Si.no</th>
-                    <th >Order number</th>
-                    <th >Username</th>
-                    <th>Total amount</th>
-                    <th>Payment mode</th>
-                    <th>Order status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for d in data %}
-                <tr>
-                    <th scope="row">{{forloop.counter}}</th>
-                    <td>{{d.ordernumber}}</td>
-                    <td>{{d.user.username}}</td>
-                    <td>{{d.totalamount}}</td>
-                    {% if d.paymentmode == 'cod' %}
-                    <td>Cash on delivery</td>
-                    {% else %}
-                    <td>Paypal</td>
-                    {% endif %}
-                    <td>{{d.status}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    <table>
+        <thead>
+            <tr>
+                <th class="text-primary">Si.no</th>
+                <th class="text-primary">Order number</th>
+                <th class="text-primary">Username</th>
+                <th class="text-primary">Total amount</th>
+                <th class="text-primary">Payment mode</th>
+                <th class="text-primary">Order status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in data %}
+            <tr>
+                <th>{{forloop.counter}}</th>
+                <th>{{ d.ordernumber }}</th>
+                <th>{{ d.user.username }}</th>
+                <th>{{ d.totalamount }}</th>
+                {% if d.paymentmode == 'cod' %}
+                <th> Cash on delivery </th>
+                {% else %}
+                <th>Paypal</th>
+                {% endif %}
+                <th>{{ d.status }}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>

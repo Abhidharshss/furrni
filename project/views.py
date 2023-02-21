@@ -17,6 +17,10 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.shortcuts import render
 import datetime
+import openpyxl
+from openpyxl import Workbook
+import pytz
+from io import StringIO
 from datetime import datetime
 # Create your views here.
 from django.shortcuts import render, redirect, HttpResponse
@@ -64,8 +68,6 @@ from .models import user as usr, category as cat, product as pro, cart as car, c
 #     buf.seek(0)
 #     return FileResponse(buf,as_attachment=True,filename='report.pdf')
 
-def sales(request):
-    return render('sales.html')
 
 def createpdf(request):
     if request.POST:
@@ -74,36 +76,54 @@ def createpdf(request):
         todate = request.POST['todate']
         todt = datetime.strptime(todate, '%Y-%m-%d').date()
         currentdate = datetime.today().date()
-        print(currentdate)
-        if (currentdate > fromdt) and (currentdate > todt) and (fromdt < todt):
+        if (currentdate >= fromdt) and (currentdate >= todt) and (fromdt < todt):
             if 'pdf' in request.POST:
-                data = ord.objects.filter(orderdate__range=[fromdt, todt])
-                return redirect('sales',{'data':data})
-                # template_path = 'sales.html'
-                # context = {'data': data,'fromdate':fromdate,'todate':todate}
-                # # Create a Django response object, and specify content_type as pdf
-                # response = HttpResponse(content_type='application/pdf')
-                # response['Content-Disposition'] = 'attachment; filename="salesreport.pdf"'
-                # # find the template and render it.
-                # template = get_template(template_path)
-                # html = template.render(context)
+                print('2')
+                data = ord.objects.filter(orderdate__range=[fromdate, todate])
+                print(data)
+                template_path = 'sales.html'
+                context = {'data': data,
+                           'fromdate': fromdate, 'todate': todate}
+                # Create a Django response object, and specify content_type as pdf
+                response = HttpResponse(content_type='application/pdf')
+                response['Content-Disposition'] = 'attachment; filename="salesreport.pdf"'
+                # find the template and render it.
+                template = get_template(template_path)
+                html = template.render(context)
 
-                # # create a pdf
-                # pisa_status = pisa.CreatePDF(
-                #     html, dest=response)
-                # # if error then show some funny view
-                # if pisa_status.err:
-                #     return HttpResponse('We had some errors <pre>' + html + '</pre>')
-                # return response
+                # create a pdf
+                pisa_status = pisa.CreatePDF(
+                    html, dest=response)
+                # if error then show some funny view
+                if pisa_status.err:
+                    return HttpResponse('We had some errors <pre>' + html + '</pre>')
+                return response
+            elif 'excel' in request.POST:
+                orders = ord.objects.filter(orderdate__range=[fromdt, todt]).order_by('orderdate')
+                response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                response['Content-Disposition'] = 'attachment; filename=Report.xlsx'
+                wb = openpyxl.Workbook()
+                ws = wb.active
+                ws.append(['Order Number', 'User' , 'Order Status' , 'Order Total' , 'Order Date',])
+                for order in orders:
+                    date = order.orderdate.astimezone(pytz.utc).replace(tzinfo=None)
+                    ws.append([order.ordernumber,order.user.email,order.status, order.totalamount,date,])
+                file_name = "sales_report.xlsx"
+                wb.save(file_name)
+                with open(file_name, "rb") as f:
+                    response = HttpResponse(f.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    response["Content-Disposition"] = f"attachment; filename={file_name}"
+                    return response
+
             else:
-                print('excel')
-                print(fromdate)
-                print(todate)
+                messages.error(request, 'Invalid request detected')
                 return redirect('adminhome')
         else:
-            messages.warning(request,'Please provide the date in a valid format')
+            messages.warning(
+                request, 'Please provide the date in a valid format')
             return redirect('adminhome')
     else:
+        print('else')
         return redirect('adminhome')
 
 
@@ -866,6 +886,9 @@ def orderhistory(request):
         return render(request, 'orderhistory.html', {'datap': datap, 'datac': datac, 'data': data})
     else:
         return redirect('userlogin')
+    
+def invoice(request):
+    return redirect('orderhistory')
 
 
 def usorcan(request):
