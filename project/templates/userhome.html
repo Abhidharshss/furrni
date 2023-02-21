@@ -1,7 +1,7 @@
 {% extends 'user.html' %}
 {% load static %}
 {% block input %}
-<form class="input-group w-auto my-auto mx-5" method="post" action="{% url 'userhome' %}">
+<form class="input-group m-auto w-100" style="max-width: 300px;" method="post" action="{% url 'userhome' %}">
     {% csrf_token %}
     <input autocomplete="off" type="search" class="form-control rounded" name="search" value="{{s}}"
         placeholder='Search (ctrl + "/" to focus)' style="max-width:76%;" />

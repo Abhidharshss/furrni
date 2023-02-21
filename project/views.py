@@ -888,7 +888,20 @@ def orderhistory(request):
         return redirect('userlogin')
     
 def invoice(request):
-    return redirect('orderhistory')
+    order=request.GET['order']
+    data=ord.objects.get(orderid=order)
+    items=ordit.objects.filter(order=data).all()
+    template = get_template('invoice.html')
+    context = {'data':data,'items':items}
+    html = template.render(context)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="FurrniInvoice.pdf"'
+
+    pdf = pisa.CreatePDF(html, response)
+    if not pdf.err:
+        return response
+    return HttpResponse('Error generating PDF: %s' % pdf.err, status=500)
 
 
 def usorcan(request):
