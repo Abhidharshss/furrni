@@ -79,5 +79,6 @@ urlpatterns =[
     path('editaddress',views.editaddress,name='editaddress'),
     path('newaddress',views.newaddress,name='newaddress'),
     path('createpdf',views.createpdf,name='createpdf'),
+    path('sales',views.sales,name='sales'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

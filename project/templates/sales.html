@@ -14,20 +14,24 @@
     <div class="text-center">
             <p class="h4">Sales report</p>
     </div>
-    <div class="p-3">
-        <table class="table table-bordered text-center">
+    <div class="p-3 mt-5">
+        <div class="row">
+            <div class="col-auto">From : {{fromdate}}</div>
+            <div class="col-auto mx-2">To : {{todate}}</div>
+        </div>
+        <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">Si.no</th>
-                    <th scope="col">Order number</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Total amount</th>
-                    <th scope="col">Payment mode</th>
-                    <th scope="col">Order status</th>
+                    <th >Si.no</th>
+                    <th >Order number</th>
+                    <th >Username</th>
+                    <th>Total amount</th>
+                    <th>Payment mode</th>
+                    <th>Order status</th>
                 </tr>
             </thead>
             <tbody>
-                {% for d in context %}
+                {% for d in data %}
                 <tr>
                     <th scope="row">{{forloop.counter}}</th>
                     <td>{{d.ordernumber}}</td>
