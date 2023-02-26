@@ -415,12 +415,16 @@ def paypal(request):
                 ordernotes = request.POST['ordernotes']
                 total = request.POST['tid']
                 coupon = request.POST['cid']
-                cop = cp.objects.get(couponcode=coupon)
+                discount = request.POST['did']
+                try:
+                    cop = cp.objects.get(couponcode=coupon)
+                except Exception as identifier:
+                    pass
                 datac = add.objects.get(addressid=address)
                 user = usr.objects.get(userid=id)
                 order_number = generate_order_number()
                 print(order_number)
-                ord.objects.create(user=user, ordernumber=order_number, address=datac, coupon=cop,
+                ord.objects.create(user=user, ordernumber=order_number, address=datac, coupon=cop,discount=discount,
                                    ordernotes=ordernotes, status='waiting', totalamount=total, paymentmode='paypal')
                 cart = car.objects.get(user=user)
                 datad = carit.objects.filter(cart=cart.cartid).all()
@@ -1063,7 +1067,7 @@ def signup(request):
             pass
         user = usr.objects.create(
             email=email, phone=phone, username=username, password=password, role='user', status='False')
-        user.save()
+        # user.save()
         secret = pyotp.random_base32()
         totp = pyotp.TOTP(secret, interval=300)
         otp = totp.now()

@@ -123,7 +123,7 @@
                                                             <div class="form-outline-dark">
                                                                 <label class="form-label" for="form3Example1">First
                                                                     name</label>
-                                                                <input type="text" id="form3Example1" name="firstname"
+                                                                <input type="text" id="form3Example1" name="firstname" required
                                                                     value="{{d.firstname}}" class="form-control" />
                                                             </div>
                                                         </div>
@@ -131,7 +131,7 @@
                                                             <div class="form-outline-dark">
                                                                 <label class="form-label" for="form3Example2">Last
                                                                     name</label>
-                                                                <input type="text" id="form3Example2" name="lastname"
+                                                                <input type="text" id="form3Example2" name="lastname" required
                                                                     value="{{d.lastname}}" class="form-control" />
                                                             </div>
                                                         </div>
@@ -141,7 +141,7 @@
                                                             <div class="form-outline-dark">
                                                                 <label class="form-label"
                                                                     for="form3Example1">Street</label>
-                                                                <input type="text" id="form3Example1" name="street"
+                                                                <input type="text" id="form3Example1" name="street" required
                                                                     value="{{d.street}}" class="form-control" />
                                                             </div>
                                                         </div>
@@ -149,7 +149,7 @@
                                                             <div class="form-outline-dark">
                                                                 <label class="form-label"
                                                                     for="form3Example2">State</label>
-                                                                <input type="text" id="form3Example2" name="state"
+                                                                <input type="text" id="form3Example2" name="state" required
                                                                     value="{{d.state}}" class="form-control" />
                                                             </div>
                                                         </div>
@@ -159,7 +159,7 @@
                                                             <div class="form-outline-dark">
                                                                 <label class="form-label"
                                                                     for="form3Example1">Postalcode</label>
-                                                                <input type="text" id="form3Example1" name="postalcode"
+                                                                <input type="text" id="form3Example1" name="postalcode" required
                                                                     value="{{d.postalcode}}" class="form-control" />
                                                             </div>
                                                         </div>
@@ -167,7 +167,7 @@
                                                             <div class="form-outline-dark">
                                                                 <label class="form-label"
                                                                     for="form3Example2">Mail</label>
-                                                                <input type="text" id="form3Example2" name="mail"
+                                                                <input type="text" id="form3Example2" name="mail" required
                                                                     value="{{d.mail}}" class="form-control" />
                                                             </div>
                                                         </div>
@@ -177,7 +177,7 @@
                                                             <div class="form-outline-dark">
                                                                 <label class="form-label"
                                                                     for="form3Example1">Phone</label>
-                                                                <input type="text" id="form3Example1" name="phone"
+                                                                <input type="text" id="form3Example1" name="phone" required
                                                                     value="{{d.phone}}" class="form-control" />
                                                             </div>
                                                         </div>
@@ -258,7 +258,7 @@
                                                 <div class="form-outline-dark">
                                                     <label class="form-label" for="form3Example1">First
                                                         name</label>
-                                                    <input type="text" id="form3Example1" name="firstname"
+                                                    <input type="text" id="form3Example1" name="firstname" required
                                                         class="form-control" />
                                                 </div>
                                             </div>
@@ -266,7 +266,7 @@
                                                 <div class="form-outline-dark">
                                                     <label class="form-label" for="form3Example2">Last
                                                         name</label>
-                                                    <input type="text" id="form3Example2" name="lastname"
+                                                    <input type="text" id="form3Example2" name="lastname" required
                                                         class="form-control" />
                                                 </div>
                                             </div>
@@ -275,14 +275,14 @@
                                             <div class="col">
                                                 <div class="form-outline-dark">
                                                     <label class="form-label" for="form3Example1">Street</label>
-                                                    <input type="text" id="form3Example1" name="street"
+                                                    <input type="text" id="form3Example1" name="street" required
                                                         class="form-control" />
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-outline-dark">
                                                     <label class="form-label" for="form3Example2">State</label>
-                                                    <input type="text" id="form3Example2" name="state"
+                                                    <input type="text" id="form3Example2" name="state" required
                                                         class="form-control" />
                                                 </div>
                                             </div>
@@ -291,14 +291,14 @@
                                             <div class="col">
                                                 <div class="form-outline-dark">
                                                     <label class="form-label" for="form3Example1">Postalcode</label>
-                                                    <input type="text" id="form3Example1" name="postalcode"
+                                                    <input type="text" id="form3Example1" name="postalcode" required
                                                         class="form-control" />
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-outline-dark">
                                                     <label class="form-label" for="form3Example2">Mail</label>
-                                                    <input type="text" id="form3Example2" name="mail"
+                                                    <input type="text" id="form3Example2" name="mail" required
                                                         class="form-control" />
                                                 </div>
                                             </div>
@@ -307,7 +307,7 @@
                                             <div class="col-6">
                                                 <div class="form-outline-dark">
                                                     <label class="form-label" for="form3Example1">Phone</label>
-                                                    <input type="text" id="form3Example1" name="phone"
+                                                    <input type="text" id="form3Example1" name="phone" required
                                                         class="form-control" />
                                                 </div>
                                             </div>
@@ -343,7 +343,7 @@
                     <input type="hidden" name="uid" value="{{d.userid}}">
                     <div class="form-outline-dark mb-4">
                         <label class="form-label" for="form1Example1">Username</label>
-                        <input type="text" id="form1Example1" pattern="[A-Za-z]+" minlength="5"
+                        <input type="text" id="form1Example1" pattern="[A-Za-z]+" minlength="5" required
                             title="it can be only alphabets and should be 5 atleast" value="{{d.username}}"
                             class="form-control" name="username" style="height: 5vh;" />
                     </div>
