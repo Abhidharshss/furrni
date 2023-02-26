@@ -16,6 +16,28 @@
     <p class="h2 text-center"><b>Order list is empty</b></p>
 </div>
 {% else %}
+<div class="col-12 mb-3">
+    <form method="post" action="{% url 'createpdf' %}" class="bg-secondary p-3">
+        {% csrf_token %}
+        <div class="row mx-auto">
+            <div class="col-auto mt-1 text-white">
+                <b>Sales report</b>
+            </div>
+            <div class="col-auto p-0">
+                <input type="date" class="form-control" placeholder="Input 1" name="fromdate" required>
+            </div>
+            <div class="col-auto">
+                <input type="date" class="form-control" placeholder="Input 2" name="todate" required>
+            </div>
+            <div class="col-auto">
+                <button type="submit" name="pdf" class="btn btn-primary">Download Pdf</button>
+            </div>
+            <div class="col-auto">
+                <button type="submit" name="excel" class="btn btn-secondary">Download Excel</button>
+            </div>
+        </div>
+    </form>
+</div>
 <form class="d-none d-md-flex input-group w-auto my-auto" method="post" action="{% url 'orderlist' %}">
     {% csrf_token %}
     <input autocomplete="off" type="search" class="form-control rounded" name="search"
@@ -183,8 +205,8 @@
 <div class="pagination mx-3">
     <span class="step-links">
         {% if data.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ data.previous_page_number }}">previous</a>
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ data.previous_page_number }}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -192,8 +214,8 @@
         </span>
 
         {% if data.has_next %}
-            <a href="?page={{ data.next_page_number }}">next</a>
-            <a href="?page={{ data.paginator.num_pages }}">last &raquo;</a>
+        <a href="?page={{ data.next_page_number }}">next</a>
+        <a href="?page={{ data.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
 </div>
