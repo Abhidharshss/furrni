@@ -183,15 +183,15 @@
 								</table>
 
 								{% if offer %}
-								<input type="text" name="did" value="{{offer}}">
+								<input type="hidden" name="did" value="{{offer}}">
 								{% else %}
-								<input type="text" name="did" value="None">
+								<input type="hidden" name="did" value="None">
 								{% endif %}
-								<input type="text" name="tid" id="" value="{{datap.total}}">
+								<input type="hidden" name="tid" id="" value="{{datap.total}}">
 								{% if cop %}
-								<input type="text" name="cid" id="" value="{{cop}}">
+								<input type="hidden" name="cid" id="" value="{{cop}}">
 								{% else %}
-								<input type="text" name="cid" value="None">
+								<input type="hidden" name="cid" value="None">
 								{% endif %}
 
 								<div class="form-group">

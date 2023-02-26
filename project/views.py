@@ -26,49 +26,6 @@ from datetime import datetime
 from django.shortcuts import render, redirect, HttpResponse
 from .models import user as usr, category as cat, product as pro, cart as car, cartitem as carit, banner as bn, order as ord, orderitems as ordit, address as add, wishlist as wish, wishlistitems as wishit, coupon as cp
 
-# pdf
-# HttpResponse
-# reportlabpdf
-# from django.http import FileResponse
-# import io
-# from reportlab.pdfgen import canvas
-# from reportlab.lib.units import inch
-# from reportlab.lib.pagesizes import letter
-# reportlabpdf end
-
-# Create your views here.
-
-# def reportpdf(request):
-#     #create bytestream buffer
-#     buf=io.BytesIO()
-#     #create a canvas
-#     c=canvas.Canvas(buf,pagesize=letter,bottomup=0)
-#     #create a text object
-#     textob=c.beginText()
-#     textob.setTextOrigin(inch,inch)
-#     textob.setFont("Helvetica",14)
-#     c.drawString(5, 0, "Report Heading")
-#     data=ord.objects.filter(status='completed').all()
-#     datac=ord.objects.filter(status='completed').count()
-#     total=0
-#     for d in data:
-#         total=total+int(d.totalamount)
-#     details=[
-#         'Total number of Completed orders :' + str(datac),
-#         'Sales amount credited :' + str(total),
-#     ]
-
-#     #loop
-#     for i in details:
-#         textob.textLine(i)
-#     #finish up
-#     c.drawText(textob)
-#     c.showPage()
-#     c.save()
-#     buf.seek(0)
-#     return FileResponse(buf,as_attachment=True,filename='report.pdf')
-
-
 def createpdf(request):
     if request.POST:
         fromdate = request.POST['fromdate']
@@ -78,9 +35,7 @@ def createpdf(request):
         currentdate = datetime.today().date()
         if (currentdate >= fromdt) and (currentdate >= todt) and (fromdt < todt):
             if 'pdf' in request.POST:
-                print('2')
                 data = ord.objects.filter(orderdate__range=[fromdate, todate])
-                print(data)
                 template_path = 'sales.html'
                 context = {'data': data,
                            'fromdate': fromdate, 'todate': todate}
@@ -99,19 +54,25 @@ def createpdf(request):
                     return HttpResponse('We had some errors <pre>' + html + '</pre>')
                 return response
             elif 'excel' in request.POST:
-                orders = ord.objects.filter(orderdate__range=[fromdt, todt]).order_by('orderdate')
-                response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                orders = ord.objects.filter(
+                    orderdate__range=[fromdt, todt]).order_by('orderdate')
+                response = HttpResponse(
+                    content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
                 response['Content-Disposition'] = 'attachment; filename=Report.xlsx'
                 wb = openpyxl.Workbook()
                 ws = wb.active
-                ws.append(['Order Number', 'User' , 'Order Status' , 'Order Total' , 'Order Date',])
+                ws.append(['Order Number', 'User', 'Order Status',
+                          'Order Total', 'Order Date',])
                 for order in orders:
-                    date = order.orderdate.astimezone(pytz.utc).replace(tzinfo=None)
-                    ws.append([order.ordernumber,order.user.email,order.status, order.totalamount,date,])
+                    date = order.orderdate.astimezone(
+                        pytz.utc).replace(tzinfo=None)
+                    ws.append([order.ordernumber, order.user.email,
+                              order.status, order.totalamount, date,])
                 file_name = "sales_report.xlsx"
                 wb.save(file_name)
                 with open(file_name, "rb") as f:
-                    response = HttpResponse(f.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    response = HttpResponse(f.read(
+                    ), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
                     response["Content-Disposition"] = f"attachment; filename={file_name}"
                     return response
 
@@ -123,7 +84,6 @@ def createpdf(request):
                 request, 'Please provide the date in a valid format')
             return redirect('adminhome')
     else:
-        print('else')
         return redirect('adminhome')
 
 
@@ -260,14 +220,6 @@ def inccartitem(request):
 
 
 def deccartitem(request):
-    # id=request.GET['id']
-    # data=carit.objects.get(cartitemid=id)
-    # if data.quantity < 2:
-    #     carit.objects.filter(cartitemid=id).delete()
-    #     messages.error(request,'Cartitem deleted')
-    # else:
-    #     carit.objects.filter(cartitemid=id).update(quantity=F('quantity')-1)
-    # return redirect('cart')
     if request.method == 'POST':
         id = request.session['id']
         total = 0
@@ -283,9 +235,6 @@ def deccartitem(request):
             y = int(d.quantity)
             total += (x * y)
             quantity += d.quantity
-        # else:
-        #     print(3)
-        #     carit.objects.filter(cartitemid=prod_id).delete()
         data = {
             'quantity': c.quantity,
             'total': total,
@@ -323,30 +272,25 @@ def checkout(request):
         if request.POST:
             coupon = request.POST['coupon']
             try:
-                cid = request.POST['cid']
-            except Exception as identifier:
-                pass
-            try:
                 datacp = cp.objects.get(couponcode=coupon)
                 if datacp:
                     cop = coupon
-                    messages.success(request, 'Coupon applied')
+                    datao = datacp.percentage
+                    datada = datacp.expirytdate
+                    currentdate = datetime.now().date()
+                    if currentdate >= datada:
+                        messages.error(request, "offer expired")
+                    else:
+                        dat = int(total)*(int(datao)/100)
+                        offer = int(dat)
+                        total -= int(dat)
+                        messages.success(request, 'Coupon applied')
+                else:
+                    messages.warning(request, "Invalid coupon")
             except Exception as identifier:
                 datacp = None
+                messages.warning(request,"Invalid couponname")
                 pass
-            if datacp:
-                datao = datacp.percentage
-                datada = datacp.expirytdate
-                currentdate = datetime.datetime.now().date()
-                if currentdate >= datada:
-                    messages.error(request, "offer expired")
-                else:
-                    dat = int(total)*(int(datao)/100)
-                    offer = int(dat)
-                    total -= int(dat)
-            else:
-                messages.error(request, 'Invalid coupon name')
-
         datap = {
             "total": total,
             "quantity": quantity,
@@ -386,7 +330,6 @@ def paypal(request):
                 total = request.POST['tid']
                 coupon = request.POST['cid']
                 discount = request.POST['did']
-                print(discount)
                 try:
                     cop = cp.objects.get(couponcode=coupon)
                 except Exception as identifier:
@@ -423,8 +366,7 @@ def paypal(request):
                 datac = add.objects.get(addressid=address)
                 user = usr.objects.get(userid=id)
                 order_number = generate_order_number()
-                print(order_number)
-                ord.objects.create(user=user, ordernumber=order_number, address=datac, coupon=cop,discount=discount,
+                ord.objects.create(user=user, ordernumber=order_number, address=datac, coupon=cop, discount=discount,
                                    ordernotes=ordernotes, status='waiting', totalamount=total, paymentmode='paypal')
                 cart = car.objects.get(user=user)
                 datad = carit.objects.filter(cart=cart.cartid).all()
@@ -537,7 +479,6 @@ def userhome(request):
             return render(request, 'userhome.html', {'data': data, 's': s, 'datac': datac})
         if 'price_range' in request.GET:
             price_range = request.GET['price_range']
-            print(price_range)
             if price_range == "low_to_high":
                 data = data.order_by('discountprice')
                 return render(request, 'userhome.html', {'data': data, 'datac': datac})
@@ -547,7 +488,6 @@ def userhome(request):
         if 'filter' in request.POST:
             min = request.POST['min']
             max = request.POST['max']
-            print(max)
             if not max:
                 data = pro.objects.filter(discountprice__gte=min)
                 return render(request, 'userhome.html', {'data': data, 'datac': datac, 'min': min})
@@ -890,13 +830,14 @@ def orderhistory(request):
         return render(request, 'orderhistory.html', {'datap': datap, 'datac': datac, 'data': data})
     else:
         return redirect('userlogin')
-    
+
+
 def invoice(request):
-    order=request.GET['order']
-    data=ord.objects.get(orderid=order)
-    items=ordit.objects.filter(order=data).all()
+    order = request.GET['order']
+    data = ord.objects.get(orderid=order)
+    items = ordit.objects.filter(order=data).all()
     template = get_template('invoice.html')
-    context = {'data':data,'items':items}
+    context = {'data': data, 'items': items}
     html = template.render(context)
 
     response = HttpResponse(content_type='application/pdf')
@@ -1072,7 +1013,7 @@ def signup(request):
         totp = pyotp.TOTP(secret, interval=300)
         otp = totp.now()
         send_mail('Furni', 'Your OTP code is'+str(otp)+' .Please use this OTP to verify your account',
-                  'furrni.shop@gmail.com', [user.email], fail_silently=False)
+                  'abhidharsh6@gmail.com', [user.email], fail_silently=False)
         response = redirect(f'otpverification/{user.userid}/{secret}')
         response.set_cookie("can_otp_enter", True, max_age=300)
         messages.success(request, 'Otp send to yout E-mail address')
@@ -1174,7 +1115,6 @@ def newpwd(request):
     sec = request.GET.get('secret')
     if request.POST:
         secretkey = request.COOKIES.get("secretkey")
-        print(secretkey)
         if secretkey == sec:
             password = request.POST['password']
             repassword = request.POST['repassword']

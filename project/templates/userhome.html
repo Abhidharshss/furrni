@@ -52,28 +52,6 @@
         </div>
         {% endfor %}
         {% if data %}
-        <!-- <div class="mt-2 row g-3">
-            <div class="col-auto">
-                <select class="form-select w-auto" id="price_range">
-                    <option value="">Select price range</option>
-                    <option value="low_to_high">Price : Low to High</option>
-                    <option value="high_to_low">Price : High to Low</option>
-                </select>
-            </div>
-            <div class="col-auto">
-                <form class="row g-3">
-                    <div class="col-auto">
-                        <input type="number" class="form-control" id="min_price" placeholder="Enter min price">
-                    </div>
-                    <div class="col-auto">
-                        <input type="number" class="form-control" id="max_price" placeholder="Enter max price">
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-primary">Apply</button>
-                    </div>
-                </form>
-            </div>
-        </div> -->
 
         <div class="mt-2 row g-3">
             <div class="col-auto">
@@ -135,9 +113,6 @@
                                 {% endif %}
                             </strong><br>
                             <p class="mx-2 h6 mt-1">{{i.provider}}</p>
-                            <!-- <span class="icon-cross">
-                                <img src="{% static 'img/cross.svg' %}" class="img-fluid ">
-                            </span> -->
                         </a>
                     </form>
                     <div class="mx-5">
@@ -182,14 +157,7 @@
 
 
 
-            // .then(response => response.json())
-            // .then(data => {
-            //   // Update the content of the page
-            //   content.innerHTML = "";
-            //   for (var i = 0; i < data.length; i++) {
-            //     content.innerHTML += "<p>" + data[i].productname + " - $" + data[i].price + "</p>";
-            //   }
-            // });
+           
         });
 
     </script>
