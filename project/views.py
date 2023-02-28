@@ -21,7 +21,7 @@ import openpyxl
 from openpyxl import Workbook
 import pytz
 from io import StringIO
-from datetime import datetime
+from datetime import datetime,time, timedelta
 # Create your views here.
 from django.shortcuts import render, redirect, HttpResponse
 from .models import user as usr, category as cat, product as pro, cart as car, cartitem as carit, banner as bn, order as ord, orderitems as ordit, address as add, wishlist as wish, wishlistitems as wishit, coupon as cp
@@ -35,7 +35,7 @@ def createpdf(request):
         currentdate = datetime.today().date()
         if (currentdate >= fromdt) and (currentdate >= todt) and (fromdt < todt):
             if 'pdf' in request.POST:
-                data = ord.objects.filter(orderdate__range=[fromdate, todate])
+                data = ord.objects.filter(orderdate__range=[fromdate, todate + " 23:59:59"])
                 template_path = 'sales.html'
                 context = {'data': data,
                            'fromdate': fromdate, 'todate': todate}
@@ -55,7 +55,7 @@ def createpdf(request):
                 return response
             elif 'excel' in request.POST:
                 orders = ord.objects.filter(
-                    orderdate__range=[fromdt, todt]).order_by('orderdate')
+                    orderdate__range=[fromdt, todt ]).order_by('orderdate')
                 response = HttpResponse(
                     content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
                 response['Content-Disposition'] = 'attachment; filename=Report.xlsx'
@@ -78,13 +78,13 @@ def createpdf(request):
 
             else:
                 messages.error(request, 'Invalid request detected')
-                return redirect('adminhome')
+                return redirect('orderlist')
         else:
             messages.warning(
                 request, 'Please provide the date in a valid format')
-            return redirect('adminhome')
+            return redirect('orderlist')
     else:
-        return redirect('adminhome')
+        return redirect('orderlist')
 
 
 def index(request):
@@ -1008,7 +1008,7 @@ def signup(request):
             pass
         user = usr.objects.create(
             email=email, phone=phone, username=username, password=password, role='user', status='False')
-        # user.save()
+        user.save()
         secret = pyotp.random_base32()
         totp = pyotp.TOTP(secret, interval=300)
         otp = totp.now()
@@ -1271,8 +1271,8 @@ def addoffer(request):
         offercode = request.POST['offercode']
         expirydate = request.POST['expirydate']
         offerpercentage = request.POST['offerpercentage']
-        currentdate = datetime.datetime.now().date()
-        expirydate1 = datetime.datetime.strptime(expirydate, '%Y-%m-%d').date()
+        currentdate = datetime.now().date()
+        expirydate1 = datetime.strptime(expirydate, '%Y-%m-%d').date()
         if expirydate1 <= currentdate:
             messages.error(
                 request, "Expiry date should be beyond the current date")
@@ -1329,16 +1329,16 @@ def updateoffer(request):
                 couponname=offername, couponcode=offercode, percentage=offerpercentage)
             return redirect('offerlist')
         else:
-            expirydate1 = datetime.datetime.strptime(
+            expirydate1 = datetime.strptime(
                 expirydate, '%Y-%m-%d').date()
-            currentdate = datetime.datetime.now().date()
+            currentdate = datetime.now().date()
             if expirydate1 <= currentdate:
                 messages.error(
                     request, "Expiry date should be beyond the current date")
                 return redirect('offerlist')
             else:
                 cp.objects.filter(couponid=id).update(
-                    couponname=offername, couponcode=offercode, expirydate=expirydate, percentage=offerpercentage)
+                    couponname=offername, couponcode=offercode, expirytdate=expirydate, percentage=offerpercentage)
                 messages.success(request, "Offer updated successfully")
                 return redirect('offerlist')
     else:

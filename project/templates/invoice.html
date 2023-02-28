@@ -84,7 +84,10 @@
         Paypal
         {% endif %}
     </p>
+    {% if data.coupon %}
     <p>Coupon applied : {{data.coupon.couponname}}({{data.coupon.percentage}}% discount)</p>
+    {% else %}
+    {% endif %}
     <p><strong>Total: Rs {{data.totalamount}}</strong></p>
 </body>
 
